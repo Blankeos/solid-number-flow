@@ -1,7 +1,7 @@
-import { createEffect, createResource, createSignal, FlowProps, JSX, Show } from 'solid-js'
-import * as shikiji from 'shikiji'
-import { Dynamic, render } from 'solid-js/web'
-import { MDXProvider } from 'solid-marked'
+import { createEffect, createResource, createSignal, FlowProps, JSX, Show } from 'solid-js';
+import * as shikiji from 'shikiji';
+import { Dynamic, render } from 'solid-js/web';
+import { MDXProvider } from 'solid-marked';
 
 export function Markdown(props: FlowProps) {
   const [highlighter] = createResource(async () =>
@@ -9,7 +9,7 @@ export function Markdown(props: FlowProps) {
       langs: ['tsx', 'jsx', 'md', 'mdx', 'markdown', 'bash', 'js', 'ts'],
       themes: ['vitesse-dark'],
     }),
-  )
+  );
 
   return (
     <MDXProvider
@@ -21,44 +21,44 @@ export function Markdown(props: FlowProps) {
                 {props.children}
               </Dynamic>
             </a>
-          )
+          );
         },
         Paragraph(props): JSX.Element {
-          return <p>{props.children}</p>
+          return <p>{props.children}</p>;
         },
         Root(props): JSX.Element {
-          return <div class="">{props.children}</div>
+          return <div class="">{props.children}</div>;
         },
         Blockquote(props): JSX.Element {
-          return <blockquote>{props.children}</blockquote>
+          return <blockquote>{props.children}</blockquote>;
         },
         Image(props): JSX.Element {
-          return <img src={props.url} alt={props.alt ?? props.title ?? undefined} />
+          return <img src={props.url} alt={props.alt ?? props.title ?? undefined} />;
         },
         Code(props): JSX.Element {
-          const [ref, setRef] = createSignal<HTMLPreElement | undefined>()
+          const [ref, setRef] = createSignal<HTMLPreElement | undefined>();
           createEffect(() => {
-            const current = ref()
-            const instance = highlighter()
-            const content = props.children
+            const current = ref();
+            const instance = highlighter();
+            const content = props.children;
             if (current && instance && content) {
               current.innerHTML = instance.codeToHtml(content, {
                 lang: (props.lang ?? undefined) as shikiji.BuiltinLanguage,
                 theme: 'vitesse-dark',
-              })
+              });
             }
-          })
-          return <div ref={setRef} lang={props.lang ?? undefined} />
+          });
+          return <div ref={setRef} lang={props.lang ?? undefined} />;
         },
         InlineCode(props): JSX.Element {
-          return <code>{props.children}</code>
+          return <code>{props.children}</code>;
         },
         List(props): JSX.Element {
           return (
             <Dynamic component={props.ordered ? 'ol' : 'ul'} start={props.start ?? undefined}>
               {props.children}
             </Dynamic>
-          )
+          );
         },
         ListItem(props): JSX.Element {
           return (
@@ -68,18 +68,18 @@ export function Markdown(props: FlowProps) {
                 {props.children}
               </Show>
             </li>
-          )
+          );
         },
         Link(props): JSX.Element {
           return (
             <a href={props.url} title={props.title ?? undefined}>
               {props.children}
             </a>
-          )
+          );
         },
       }}
     >
       {props.children}
     </MDXProvider>
-  )
+  );
 }

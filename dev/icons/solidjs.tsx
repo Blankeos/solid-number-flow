@@ -1,4 +1,4 @@
-import { JSX, VoidProps } from 'solid-js'
+import { JSX, VoidProps } from 'solid-js';
 
 export function IconSolidJS(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>) {
   return (
@@ -55,5 +55,5 @@ export function IconSolidJS(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>)
       </linearGradient>
       <path d="M114 115a45 45 0 00-48-15L4 120s53 40 94 30l3-1c17-5 23-21 13-34z" fill="url(#d)" />
     </svg>
-  )
+  );
 }
