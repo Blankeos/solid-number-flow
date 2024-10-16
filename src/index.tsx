@@ -47,7 +47,9 @@ const formatters: Record<string, Intl.NumberFormat> = {};
 
 export default function NumberFlow(props: NumberFlowProps) {
   onMount(() => {
-    NumberFlowElement.define();
+    if (!customElements.get('number-flow')) {
+      NumberFlowElement.define();
+    }
   });
 
   const localesString = createMemo(
