@@ -15,7 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
@@ -25,11 +27,11 @@ jobs:
       # "git restore ." discards changes to package-lock.json
       - name: Install dependencies
         run: |
-          pnpm install --no-frozen-lockfile --ignore-scripts
+          bun install --no-frozen-lockfile --ignore-scripts
           git restore .
 
       - name: Format
-        run: pnpm run format
+        run: bun run format
 
       - name: Add, Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v4
