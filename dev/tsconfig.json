@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["vite/client", "solid-marked/env"]
+  },
+  "exclude": ["node_modules", "dist"]
+}
