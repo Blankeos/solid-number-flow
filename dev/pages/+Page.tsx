@@ -17,15 +17,25 @@ export default function HomePage() {
         </span>
         <NumberFlow class="text-6xl" value={value()} />
 
-        <button
-          class="flex items-center gap-x-2 rounded-full bg-neutral-900 px-6 py-3 active:scale-95"
-          onClick={() => {
-            cycle();
-          }}
-        >
-          <IconShuffle />
-          Shuffle
-        </button>
+        <div class="flex items-center gap-x-3">
+          <button
+            class="flex items-center gap-x-2 rounded-full bg-neutral-900 px-6 py-3 active:scale-95"
+            onClick={() => {
+              cycle();
+            }}
+          >
+            <IconShuffle />
+            Shuffle
+          </button>
+
+          <a
+            href="https://github.com/blankeos/solid-number-flow"
+            target="_blank"
+            class="rounded-full border border-white p-2 hover:bg-neutral-50/20 active:scale-95"
+          >
+            <IconGithub class="h-5 w-5" />
+          </a>
+        </div>
 
         <p class="max-w-xl text-center text-zinc-300">
           A Solid component to transition, localize, and format numbers. Dependency-free.
@@ -55,6 +65,7 @@ import { createEffect, createMemo, createSignal } from 'solid-js';
 import { IconShuffle } from '../icons/shuffle';
 import { IconSolidJS } from '../icons/solidjs';
 import { Markdown } from '../markdown';
+import { IconGithub } from '../icons/github';
 
 /**
  * A hook that toggles between two or multiple values (by implementing a common state pattern).

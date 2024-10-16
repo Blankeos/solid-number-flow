@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/bundlephobia/minzip/bagon-hooks?style=for-the-badge" alt="NPM Bundle Size" ></img>
 </div>
 
-A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.
+A SolidJS component to transition, format, and localize numbers. Forked from [@barvian/number-flow](https://github.com/barvian/number-flow).
 
 ## Quick start
 
