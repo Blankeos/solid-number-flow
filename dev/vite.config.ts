@@ -31,7 +31,9 @@ export default defineConfig({
           .replace(/import\.meta\.env\.NODE_ENV/g, '"development"');
       },
     },
-    vike({}),
+    vike({
+      prerender: true,
+    }),
     vikeSolid(),
   ],
   server: {
