@@ -3,9 +3,8 @@
   "tabWidth": 2,
   "printWidth": 100,
   "plugins": ["prettier-plugin-tailwindcss"],
-  "semi": false,
+  "semi": true,
   "singleQuote": true,
   "useTabs": false,
-  "arrowParens": "avoid",
   "bracketSpacing": true
 }

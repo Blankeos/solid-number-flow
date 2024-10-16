@@ -1,14 +1,13 @@
-import type { Component } from 'solid-js'
-
-import NumberFlow from '../src'
+import NumberFlow, { useCanAnimate } from '../../src';
 
 // @ts-ignore
-import Usage from './markdown/usage.md'
+import Usage from '../markdown/usage.md';
 // @ts-ignore
-import NPMInstall from './markdown/npm-install.md'
+import NPMInstall from '../markdown/npm-install.md';
 
-const App: Component = () => {
-  const [value, cycle] = useCycle([398.43, -3243.5, 1435237])
+export default function HomePage() {
+  const [value, cycle] = useCycle([398.43, -3243.5, 1435237]);
+
   return (
     <div class="min-h-screen bg-zinc-950 text-white">
       <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 py-20">
@@ -21,7 +20,7 @@ const App: Component = () => {
         <button
           class="flex items-center gap-x-2 rounded-full bg-neutral-900 px-6 py-3 active:scale-95"
           onClick={() => {
-            cycle()
+            cycle();
           }}
         >
           <IconShuffle />
@@ -40,46 +39,43 @@ const App: Component = () => {
           </a>
         </p>
 
-        <div class="w-full max-w-xl overflow-hidden rounded-md border border-zinc-500 bg-[#121212] bg-zinc-800 p-5">
+        <div class="w-full max-w-xl overflow-hidden rounded-md border border-zinc-500 bg-[#121212] p-5">
           <Markdown children={<NPMInstall />} />
         </div>
 
-        <div class="w-full max-w-xl overflow-hidden rounded-md border border-zinc-500 bg-[#121212] bg-zinc-800 p-5">
-          {/* <SolidMarkdown /> */}
+        <div class="w-full max-w-xl overflow-hidden rounded-md border border-zinc-500 bg-[#121212] p-5">
           <Markdown children={<Usage />} />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
-
-import { createMemo, createSignal } from 'solid-js'
-import { IconShuffle } from './icons/shuffle'
-import { IconSolidJS } from './icons/solidjs'
-import { Markdown } from './markdown'
+import { createEffect, createMemo, createSignal } from 'solid-js';
+import { IconShuffle } from '../icons/shuffle';
+import { IconSolidJS } from '../icons/solidjs';
+import { Markdown } from '../markdown';
 
 /**
  * A hook that toggles between two or multiple values (by implementing a common state pattern).
  *
  * Forked from https://github.com/Blankeos/bagon-hooks/blob/main/src/use-toggle/use-toggle.ts
  */
-export function useCycle<T = boolean>(options: readonly T[] = [false, true] as any) {
-  const [_options, _setOptions] = createSignal<typeof options>(options)
+function useCycle<T = boolean>(options: readonly T[] = [false, true] as any) {
+  const [_options, _setOptions] = createSignal<typeof options>(options);
 
   function toggle() {
-    const value = _options()[0]!
-    const index = Math.abs(_options()!.indexOf(value))
+    const value = _options()[0]!;
+    const index = Math.abs(_options()!.indexOf(value));
 
     _setOptions(
       _options()!
         .slice(index + 1)
         .concat(value),
-    )
+    );
   }
 
-  const currentOption = createMemo(() => _options()[0]!)
+  const currentOption = createMemo(() => _options()[0]!);
 
-  return [currentOption, toggle] as const
+  return [currentOption, toggle] as const;
 }
