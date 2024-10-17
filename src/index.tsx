@@ -54,7 +54,7 @@ export default function NumberFlow(props: NumberFlowProps) {
   );
   const formatString = createMemo(() => (props.format ? JSON.stringify(props.format) : ''));
   const parts = createMemo(() => {
-    const formatter = (formatters[`${localesString}:${formatString}`] ??= new Intl.NumberFormat(
+    const formatter = (formatters[`${localesString()}:${formatString()}`] ??= new Intl.NumberFormat(
       props.locales,
       props.format,
     ));
@@ -92,7 +92,7 @@ export default function NumberFlow(props: NumberFlowProps) {
   return (
     <Dynamic
       ref={props.ref}
-      component={'number-flow'}
+      component="number-flow"
       class={props.class}
       //   https://docs.solidjs.com/reference/jsx-attributes/attr
       attr:data-will-change={props.willChange ? '' : undefined}
