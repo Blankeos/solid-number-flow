@@ -45,11 +45,9 @@ export type NumberFlowProps = JSX.HTMLAttributes<NumberFlowElement> & {
 // Serialize to strings b/c React:
 const formatters: Record<string, Intl.NumberFormat> = {};
 
-export default function NumberFlow(props: NumberFlowProps) {
-  onMount(() => {
-    NumberFlowElement.define();
-  });
+NumberFlowElement.define();
 
+export default function NumberFlow(props: NumberFlowProps) {
   const localesString = createMemo(
     () => (props.locales ? JSON.stringify(props.locales) : ''),
     [props.locales],
