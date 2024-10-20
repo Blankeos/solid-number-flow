@@ -4,16 +4,15 @@
 
 # solid-number-flow
 
-<!-- ![Demo](/_docs/demo.gif) -->
 <div align="center">
 <img src="_docs/demo.gif" alt="Demo"  />
 </div>
 
 <div align="center">
   <img src="https://img.shields.io/badge/maintained%20with-bun-cc00ff.svg?style=for-the-badge&logo=bun)](https://bun.sh/" alt="Bun"></img>
-  <img src="https://img.shields.io/npm/dw/bagon-hooks?style=for-the-badge" alt="NPM Downloads"></img>
-  <img src="https://img.shields.io/npm/l/bagon-hooks?style=for-the-badge" alt="NPM License"></img>
-  <img src="https://img.shields.io/bundlephobia/minzip/bagon-hooks?style=for-the-badge" alt="NPM Bundle Size" ></img>
+  <img src="https://img.shields.io/npm/dw/solid-number-flow?style=for-the-badge" alt="NPM Downloads"></img>
+  <img src="https://img.shields.io/npm/l/solid-number-flow?style=for-the-badge" alt="NPM License"></img>
+  <img src="https://img.shields.io/bundlephobia/minzip/solid-number-flow?style=for-the-badge" alt="NPM Bundle Size" ></img>
 </div>
 
 A SolidJS component to transition, format, and localize numbers. Forked from [@barvian/number-flow](https://github.com/barvian/number-flow).
@@ -36,4 +35,16 @@ Use it:
 
 ```tsx
 import solid-number-flow from 'solid-number-flow'
+
+export default function Page() {
+  const [value, setValue] = createSignal(398.43);
+
+  return (
+    <>
+      <button onClick={() => setValue(Math.random() * 1000)}>Random</button>
+      <NumberFlow value={value()} />
+    </>
+  )
+}
+
 ```

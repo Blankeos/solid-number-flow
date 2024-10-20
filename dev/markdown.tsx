@@ -1,6 +1,6 @@
-import { createEffect, createResource, createSignal, FlowProps, JSX, Show } from 'solid-js';
 import * as shikiji from 'shikiji';
-import { Dynamic, render } from 'solid-js/web';
+import { createEffect, createResource, createSignal, FlowProps, JSX, Show } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { MDXProvider } from 'solid-marked';
 
 export function Markdown(props: FlowProps) {
@@ -48,7 +48,12 @@ export function Markdown(props: FlowProps) {
               });
             }
           });
-          return <div ref={setRef} lang={props.lang ?? undefined} />;
+          return (
+            <div ref={setRef} lang={props.lang ?? undefined}>
+              {/* Render the code without syntax highlights but less opaque. */}
+              <pre class="opacity-40">{props.children}</pre>
+            </div>
+          );
         },
         InlineCode(props): JSX.Element {
           return <code>{props.children}</code>;
