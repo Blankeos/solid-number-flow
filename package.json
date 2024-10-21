@@ -1,6 +1,6 @@
 {
   "name": "solid-number-flow",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
   "license": "MIT",
   "author": "Carlo Taleon",
@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/Blankeos/solid-number-flow.git"
   },
-  "homepage": "https://github.com/Blankeos/solid-number-flow#readme",
+  "homepage": "https://solid-number-flow.pages.dev",
   "bugs": {
     "url": "https://github.com/Blankeos/solid-number-flow/issues"
   },

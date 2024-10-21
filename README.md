@@ -10,7 +10,8 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/maintained%20with-bun-cc00ff.svg?style=for-the-badge&logo=bun)](https://bun.sh/" alt="Bun"></img>
-  <img src="https://img.shields.io/npm/dw/solid-number-flow?style=for-the-badge" alt="NPM Downloads"></img>
+  <a href="https://www.npmjs.com/package/solid-number-flow" target="_blank">
+  <img src="https://img.shields.io/npm/dw/solid-number-flow?style=for-the-badge" alt="NPM Downloads"></img></a>
   <img src="https://img.shields.io/npm/l/solid-number-flow?style=for-the-badge" alt="NPM License"></img>
   <img src="https://img.shields.io/bundlephobia/minzip/solid-number-flow?style=for-the-badge" alt="NPM Bundle Size" ></img>
 </div>
