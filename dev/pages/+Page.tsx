@@ -8,6 +8,8 @@ import { IconShuffle } from '../icons/shuffle';
 import { IconSolidJS } from '../icons/solidjs';
 import { Markdown } from '../markdown';
 
+import pkgJSON from 'src/../package.json';
+
 // @ts-ignore idk what type I need to override.
 import Usage from '../markdown/usage.md';
 
@@ -69,7 +71,7 @@ export default function HomePage() {
       <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 py-20">
         <span class="flex items-center gap-x-1.5 text-base">
           <IconSolidJS class="h-6 w-6" /> NumberFlow{' '}
-          <span class="text-sm text-zinc-400">v0.3.0</span>
+          <span class="text-sm text-zinc-400">v{pkgJSON.version}</span>
         </span>
         <NumberFlow
           class="text-6xl"
