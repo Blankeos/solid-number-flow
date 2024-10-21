@@ -1,17 +1,26 @@
 import {
-  type Value,
-  type Format,
-  SlottedTag,
-  slottedStyles,
-  partitionParts,
-  NumberFlowLite,
-  prefersReducedMotion,
   canAnimate as _canAnimate,
+  type Format,
+  NumberFlowLite,
+  PartitionedParts,
+  partitionParts,
+  prefersReducedMotion,
+  slottedStyles,
+  SlottedTag,
+  type Value,
 } from 'number-flow';
+import {
+  Accessor,
+  createEffect,
+  createMemo,
+  createSignal,
+  onMount,
+  splitProps,
+  VoidProps,
+} from 'solid-js';
 import { JSX } from 'solid-js/jsx-runtime';
-import { createEffect, createMemo, createSignal, onMount, splitProps } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-export type { Value, Format, Trend } from 'number-flow';
+export type { Format, Trend, Value } from 'number-flow';
 
 // Can't wait to not have to do this in React 19:
 const OBSERVED_ATTRIBUTES = ['parts'] as const;
@@ -31,10 +40,10 @@ export type NumberFlowProps = JSX.HTMLAttributes<NumberFlowElement> & {
   animated?: boolean;
   respectMotionPreference?: boolean;
   willChange?: boolean;
-  // animateDependencies?: React.DependencyList
   onAnimationsStart?: () => void;
   onAnimationsFinish?: () => void;
   trend?: (typeof NumberFlowElement)['prototype']['trend'];
+  continuous?: (typeof NumberFlowElement)['prototype']['continuous'];
   opacityTiming?: (typeof NumberFlowElement)['prototype']['opacityTiming'];
   transformTiming?: (typeof NumberFlowElement)['prototype']['transformTiming'];
   spinTiming?: (typeof NumberFlowElement)['prototype']['spinTiming'];
@@ -47,11 +56,133 @@ const formatters: Record<string, Intl.NumberFormat> = {};
 
 NumberFlowElement.define();
 
-export default function NumberFlow(props: NumberFlowProps) {
+// ===========================================================================
+// IMPLEMENTATION (Equivalent to the React Class Component)
+// ===========================================================================
+type NumberFlowImplProps = Omit<NumberFlowProps, 'value' | 'locales' | 'format'> & {
+  innerRef: NumberFlowElement | undefined;
+  parts: Accessor<PartitionedParts>;
+};
+
+/** Used for `prevProps` because accessing signals always gives "latest" values, we don't want that. */
+type NumberFlowImplProps_NoSignals = Omit<NumberFlowImplProps, 'parts'> & {
+  parts: PartitionedParts;
+};
+
+function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
+  let el: NumberFlowElement | undefined;
+
+  const updateNonPartsProps = (prevProps?: NumberFlowImplProps_NoSignals) => {
+    if (!el) return;
+
+    // el.manual = !props.isolate; (Not sure why but this breaks the animations, so isolate might not work right now. I personally think it has a very niche usecase though).
+    if (props.animated != null) el.animated = props.animated;
+    if (props.respectMotionPreference != null)
+      el.respectMotionPreference = props.respectMotionPreference;
+    if (props.trend != null) el.trend = props.trend;
+    if (props.continuous != null) el.continuous = props.continuous;
+    if (props.opacityTiming) el.opacityTiming = props.opacityTiming;
+    if (props.transformTiming) el.transformTiming = props.transformTiming;
+    if (props.spinTiming) el.spinTiming = props.spinTiming;
+
+    if (prevProps?.onAnimationsStart)
+      el.removeEventListener('animationsstart', prevProps.onAnimationsStart);
+    if (props.onAnimationsStart) el.addEventListener('animationsstart', props.onAnimationsStart);
+
+    if (prevProps?.onAnimationsFinish)
+      el.removeEventListener('animationsfinish', prevProps.onAnimationsFinish);
+    if (props.onAnimationsFinish) el.addEventListener('animationsfinish', props.onAnimationsFinish);
+  };
+
+  onMount(() => {
+    updateNonPartsProps();
+    if (el) {
+      el.parts = props.parts();
+    }
+  });
+
+  createEffect((prevProps?: NumberFlowImplProps_NoSignals) => {
+    updateNonPartsProps(prevProps);
+    if (props.isolate) {
+      return;
+    }
+    if (prevProps?.parts === props.parts()) {
+      return;
+    }
+    el?.willUpdate();
+
+    // The returned should not have any signals (because accessing it in the next
+    // call will contain the "current" value). We want it to be "previous".
+    return {
+      ...props,
+      parts: props.parts(),
+    };
+  });
+
+  /**
+   * It's exactly like a signal setter, but we're setting two things:
+   * - innerRef (from props)
+   * - this ref
+   */
+  const handleRef = (elRef: NumberFlowElement) => {
+    props.innerRef = elRef;
+    el = elRef;
+  };
+
+  const [_used, others] = splitProps(props, [
+    'parts',
+    // From Impl
+    'class',
+    'willChange',
+    // These are set in updateNonPartsProps, so ignore them here:
+    'animated',
+    'respectMotionPreference',
+    'isolate',
+    'trend',
+    'continuous',
+    'opacityTiming',
+    'transformTiming',
+    'spinTiming',
+  ]);
+
+  // Manual Attribute setter onMount.
+  onMount(() => {
+    // This is a workaround until this gets fixed: https://github.com/solidjs/solid/issues/2339
+    const _parts = el?.getAttribute('attr:parts');
+    if (_parts) {
+      el?.removeAttribute('attr:parts');
+      el?.setAttribute('parts', _parts);
+    }
+  });
+
+  return (
+    <Dynamic
+      ref={handleRef}
+      component="number-flow"
+      class={props.class}
+      //   https://docs.solidjs.com/reference/jsx-attributes/attr
+      attr:data-will-change={props.willChange ? '' : undefined}
+      {...others}
+      prop:parts={props.parts()}
+      attr:parts={JSON.stringify(props.parts())}
+    >
+      <Dynamic component={SlottedTag} style={slottedStyles({ willChange: props.willChange })}>
+        {props.parts().formatted}
+      </Dynamic>
+    </Dynamic>
+  );
+}
+
+// ===========================================================================
+// ROOT
+// ===========================================================================
+export default function NumberFlow(props: VoidProps<NumberFlowProps>) {
   const localesString = createMemo(
     () => (props.locales ? JSON.stringify(props.locales) : ''),
     [props.locales],
   );
+  const [_, others] = splitProps(props, ['value', 'format', 'locales']);
+
   const formatString = createMemo(() => (props.format ? JSON.stringify(props.format) : ''));
   const parts = createMemo(() => {
     const formatter = (formatters[`${localesString()}:${formatString()}`] ??= new Intl.NumberFormat(
@@ -62,48 +193,9 @@ export default function NumberFlow(props: NumberFlowProps) {
     return partitionParts(props.value, formatter);
   });
 
-  const [_used, others] = splitProps(props, [
-    // For Root
-    'value',
-    'locales',
-    'format',
-    // For impl
-    'class',
-    'willChange',
-    'animated',
-    'respectMotionPreference',
-    'isolate',
-    'trend',
-    'opacityTiming',
-    'transformTiming',
-    'spinTiming',
-  ]);
+  let innerRef: NumberFlowElement | undefined;
 
-  onMount(() => {
-    // This is a workaround until this gets fixed: https://github.com/solidjs/solid/issues/2339
-    const el = props.ref as unknown as HTMLElement;
-    const _parts = el.getAttribute('attr:parts');
-    if (_parts) {
-      el.removeAttribute('attr:parts');
-      el.setAttribute('parts', _parts);
-    }
-  });
-
-  return (
-    <Dynamic
-      ref={props.ref}
-      component="number-flow"
-      class={props.class}
-      //   https://docs.solidjs.com/reference/jsx-attributes/attr
-      attr:data-will-change={props.willChange ? '' : undefined}
-      {...others}
-      attr:parts={JSON.stringify(parts())}
-    >
-      <Dynamic component={SlottedTag} style={slottedStyles({ willChange: props.willChange })}>
-        {parts().formatted}
-      </Dynamic>
-    </Dynamic>
-  );
+  return <NumberFlowImpl {...others} innerRef={innerRef} parts={parts} />;
 }
 
 // SSR-safe canAnimate
