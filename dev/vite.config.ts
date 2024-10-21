@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       src: path.resolve(__dirname, '../src'),
+      dev: path.resolve(__dirname),
     },
   },
   plugins: [
