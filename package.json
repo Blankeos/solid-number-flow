@@ -4,7 +4,13 @@
   "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
   "license": "MIT",
   "author": "Carlo Taleon",
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Maxwell Barvian",
+      "email": "max@barvian.me",
+      "url": "https://barvian.me"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Blankeos/solid-number-flow.git"
