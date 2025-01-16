@@ -163,7 +163,6 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
       //   https://docs.solidjs.com/reference/jsx-attributes/attr
       attr:data-will-change={props.willChange ? '' : undefined}
       {...others}
-      prop:parts={props.parts()}
       attr:parts={JSON.stringify(props.parts())}
     >
       <Dynamic component={SlottedTag} style={slottedStyles({ willChange: props.willChange })}>

@@ -1,0 +1,19 @@
+# I got this from Matt Pockock
+# https://www.youtube.com/watch?v=eh89VE3Mk5g
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # ...
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
+      - run: bun run ci

@@ -50,6 +50,7 @@
     "dev": "vite serve dev",
     "build": "tsup",
     "build:site": "vite build dev",
+    "preview:site": "vite preview dev",
     "test": "concurrently bun:test:*",
     "test:client": "vitest",
     "test:ssr": "bun run test:client --mode ssr",
@@ -59,12 +60,15 @@
     "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 src/**/*.{js,ts,tsx,jsx}",
     "lint:types": "tsc --noEmit",
     "update-deps": "bunx npm-check-updates --format group --interactive",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "ci": "bun run lint && bun run build",
+    "publish": "bun run lint && bun run build && changeset publish"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.10",
     "@kobalte/core": "^0.13.7",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^20.12.12",
@@ -85,7 +89,7 @@
     "prettier-plugin-tailwindcss": "^0.6.8",
     "shiki": "^1.22.0",
     "shikiji": "^0.10.2",
-    "solid-js": "^1.9.2",
+    "solid-js": "^1.6.0",
     "solid-marked": "^0.6.3",
     "tailwindcss": "^3.4.14",
     "tsup": "^8.3.0",
