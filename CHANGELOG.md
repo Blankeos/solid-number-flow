@@ -1,6 +1,6 @@
 # solid-number-flow
 
-## 0.5.0
+## 0.5.3
 
 ### Minor Changes
 
