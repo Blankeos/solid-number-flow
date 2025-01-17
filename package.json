@@ -1,34 +1,53 @@
 {
   "name": "solid-number-flow",
   "version": "0.3.3",
-  "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
-  "license": "MIT",
   "author": "Carlo Taleon",
-  "contributors": [
-    {
-      "name": "Maxwell Barvian",
-      "email": "max@barvian.me",
-      "url": "https://barvian.me"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Blankeos/solid-number-flow.git"
   },
-  "homepage": "https://solid-number-flow.pages.dev",
-  "bugs": {
-    "url": "https://github.com/Blankeos/solid-number-flow/issues"
-  },
-  "files": [
-    "dist"
-  ],
-  "private": false,
-  "sideEffects": false,
-  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "browser": {},
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.10",
+    "@kobalte/core": "^0.13.7",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "auto-changelog": "^2.5.0",
+    "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.21.3",
+    "esbuild-plugin-solid": "^0.6.0",
+    "eslint": "^9.18.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-no-only-tests": "^3.3.0",
+    "eslint-plugin-solid": "^0.14.5",
+    "jsdom": "^24.0.0",
+    "postcss": "^8.4.47",
+    "prettier": "3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "shiki": "^1.22.0",
+    "shikiji": "^0.10.2",
+    "solid-js": "^1.9.4",
+    "solid-marked": "^0.6.3",
+    "tailwindcss": "^3.4.14",
+    "tsup": "^8.3.0",
+    "tsup-preset-solid": "^2.2.0",
+    "typescript": "^5.6.3",
+    "unplugin-solid-marked": "^0.6.3",
+    "vike": "^0.4.199",
+    "vike-solid": "^0.7.6",
+    "vite": "^5.4.9",
+    "vite-plugin-solid": "^2.10.2",
+    "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.4"
+  },
   "exports": {
     "solid": {
       "development": "./dist/dev.jsx",
@@ -45,63 +64,25 @@
       "default": "./dist/index.js"
     }
   },
-  "typesVersions": {},
-  "scripts": {
-    "dev": "vite serve dev",
-    "build": "tsup",
-    "build:site": "vite build dev",
-    "preview:site": "vite preview dev",
-    "test": "concurrently bun:test:*",
-    "test:client": "vitest",
-    "test:ssr": "bun run test:client --mode ssr",
-    "prepublishOnly": "bun run build",
-    "format": "prettier --ignore-path .gitignore -w \"src/**/*.{js,ts,json,css,tsx,jsx}\" \"dev/**/*.{js,ts,json,css,tsx,jsx}\"",
-    "lint": "concurrently bun:lint:*",
-    "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 src/**/*.{js,ts,tsx,jsx}",
-    "lint:types": "tsc --noEmit",
-    "update-deps": "bunx npm-check-updates --format group --interactive",
-    "ci": "bun run lint && bun run build",
-    "publish": "bun run lint && bun run build && changeset publish"
+  "browser": {},
+  "bugs": {
+    "url": "https://github.com/Blankeos/solid-number-flow/issues"
   },
-  "peerDependencies": {
-    "solid-js": "^1.6.0"
+  "contributors": [
+    {
+      "name": "Maxwell Barvian",
+      "email": "max@barvian.me",
+      "url": "https://barvian.me"
+    }
+  ],
+  "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
+  "engines": {
+    "node": ">=18"
   },
-  "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.10",
-    "@kobalte/core": "^0.13.7",
-    "@tailwindcss/typography": "^0.5.15",
-    "@types/node": "^20.12.12",
-    "@typescript-eslint/eslint-plugin": "^7.9.0",
-    "@typescript-eslint/parser": "^7.9.0",
-    "auto-changelog": "^2.5.0",
-    "autoprefixer": "^10.4.20",
-    "clsx": "^2.1.1",
-    "concurrently": "^8.2.2",
-    "esbuild": "^0.21.3",
-    "esbuild-plugin-solid": "^0.6.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-no-only-tests": "^3.3.0",
-    "jsdom": "^24.0.0",
-    "postcss": "^8.4.47",
-    "prettier": "3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.8",
-    "shiki": "^1.22.0",
-    "shikiji": "^0.10.2",
-    "solid-js": "^1.6.0",
-    "solid-marked": "^0.6.3",
-    "tailwindcss": "^3.4.14",
-    "tsup": "^8.3.0",
-    "tsup-preset-solid": "^2.2.0",
-    "typescript": "^5.6.3",
-    "unplugin-solid-marked": "^0.6.3",
-    "vike": "^0.4.199",
-    "vike-solid": "^0.7.6",
-    "vite": "^5.4.9",
-    "vite-plugin-solid": "^2.10.2",
-    "vitest": "^1.6.0"
-  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://solid-number-flow.pages.dev",
   "keywords": [
     "solid",
     "solid-js",
@@ -114,10 +95,30 @@
     "number-animation",
     "animated-number"
   ],
-  "engines": {
-    "node": ">=18"
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "vite serve dev",
+    "build": "tsup",
+    "build:site": "vite build dev",
+    "preview:site": "vite preview dev",
+    "test": "concurrently bun:test:*",
+    "test:client": "vitest",
+    "test:ssr": "bun run test:client --mode ssr",
+    "prepublishOnly": "bun run build",
+    "format": "prettier --ignore-path .gitignore -w \"src/**/*.{js,ts,json,css,tsx,jsx}\" \"dev/**/*.{js,ts,json,css,tsx,jsx}\"",
+    "lint": "concurrently bun:lint:*",
+    "lint:code": "eslint .",
+    "lint:types": "tsc --noEmit",
+    "update-deps": "bunx npm-check-updates --format group --interactive",
+    "ci": "bun run lint && bun run build",
+    "publish": "bun run lint && bun run build && changeset publish"
   },
+  "sideEffects": false,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {},
   "dependencies": {
-    "number-flow": "^0.3.2"
+    "number-flow": "^0.5.3"
   }
 }
