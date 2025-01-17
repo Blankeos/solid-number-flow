@@ -1,5 +1,15 @@
 # solid-number-flow
 
+## 0.5.3
+
+### Minor Changes
+
+- [#5](https://github.com/Blankeos/solid-number-flow/pull/5) [`040cd79`](https://github.com/Blankeos/solid-number-flow/commit/040cd792917b7041baba213e66603b820bb3992d) Thanks [@Blankeos](https://github.com/Blankeos)! - feat: Upgraded compatibility with v0.5.3 number-flow.
+
+### Patch Changes
+
+- [#5](https://github.com/Blankeos/solid-number-flow/pull/5) [`040cd79`](https://github.com/Blankeos/solid-number-flow/commit/040cd792917b7041baba213e66603b820bb3992d) Thanks [@Blankeos](https://github.com/Blankeos)! - chore: Improved linting.
+
 ## 0.3.3
 
 ### Patch Changes
