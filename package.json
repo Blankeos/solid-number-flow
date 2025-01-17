@@ -112,7 +112,7 @@
     "lint:types": "tsc --noEmit",
     "update-deps": "bunx npm-check-updates --format group --interactive",
     "ci": "bun run lint && bun run build",
-    "publish": "bun run lint && bun run build && changeset publish"
+    "publish-ci": "bun run lint && bun run build && changeset publish"
   },
   "sideEffects": false,
   "type": "module",
