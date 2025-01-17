@@ -1,4 +1,4 @@
-import { FlowProps, JSX, VoidProps } from 'solid-js';
+import { JSX, VoidProps } from 'solid-js';
 
 export function IconGithub(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>) {
   return (
