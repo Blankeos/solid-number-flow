@@ -3,7 +3,6 @@ import {
   children,
   ComponentProps,
   createSignal,
-  createUniqueId,
   FlowProps,
   JSX,
   mergeProps,
@@ -66,14 +65,16 @@ function Demo(props: FlowProps<Props>) {
   const [knowsToClick, setKnowsToClick] = createSignal(false);
   const [active, setActive] = createSignal(_props.defaultValue);
 
-  const id = createUniqueId();
-
   function handleClick() {
+    if (!_props.onClick) return;
+
     setKnowsToClick(true);
     _props?.onClick?.();
   }
 
   const handleMouseDown: JSX.EventHandler<HTMLElement, MouseEvent> = (event) => {
+    if (!_props.onClick) return;
+
     // Prevent selection of text:
     // https://stackoverflow.com/a/43321596
     if (event.detail > 1) {
@@ -109,7 +110,7 @@ function Demo(props: FlowProps<Props>) {
                 style={{ 'border-radius': '999' }}
                 // layout
                 // layoutId={`${id}active`}
-              ></div>
+              />
             </Show>
             Preview
           </Tabs.Trigger>
@@ -127,7 +128,7 @@ function Demo(props: FlowProps<Props>) {
                 style={{ 'border-radius': '999' }}
                 // layout
                 // layoutId={`${id}active`}
-              ></div>
+              />
             </Show>
             Code
           </Tabs.Trigger>
@@ -147,8 +148,8 @@ function Demo(props: FlowProps<Props>) {
 
         <div
           class={clsx(_props.minHeight, 'flex flex-col items-center justify-center p-5 pb-6')}
-          onClick={_props?.onClick && handleClick}
-          onMouseDown={_props?.onClick && handleMouseDown}
+          onClick={handleClick}
+          onMouseDown={handleMouseDown}
         >
           {_props.children}
           {_props?.onClick && (
