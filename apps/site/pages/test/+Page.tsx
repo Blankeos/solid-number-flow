@@ -1,7 +1,7 @@
-import { continuous } from "number-flow"
+import { continuous } from "number-flow/plugins"
 import { createSignal, onMount } from "solid-js"
 // import { NumberFlow } from 'src/NumberFlow';
-import NumberFlow from "src"
+import NumberFlow from "solid-number-flow"
 
 export default function Page() {
   const [toggle, setToggle] = createSignal(false)

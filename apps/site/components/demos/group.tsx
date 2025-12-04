@@ -1,7 +1,7 @@
-import Demo, { type DemoProps } from "dev/components/demos/base-demo"
-import { useCycle } from "dev/hooks/use-cycle"
-import { cn } from "dev/utils/cn"
-import NumberFlow, { NumberFlowGroup } from "src"
+import NumberFlow, { NumberFlowGroup } from "solid-number-flow"
+import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import { useCycle } from "@/hooks/use-cycle"
+import { cn } from "@/utils/cn"
 
 const DATA = [
   { value: 124.23, diff: 0.0564 },
@@ -60,7 +60,7 @@ import NumberFlow, { NumberFlowGroup } from 'solid-number-flow'
             format={{ style: "percent", maximumFractionDigits: 2, signDisplay: "always" }}
             class={cn(
               "text-2xl transition-colors duration-300",
-              data().diff < 0 ? "text-red-500" : "text-emerald-500",
+              data().diff < 0 ? "text-red-500" : "text-emerald-500"
             )}
           />
         </div>

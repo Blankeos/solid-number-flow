@@ -1,15 +1,15 @@
-import Demo, { type DemoProps } from "dev/components/demos/base-demo"
+import type { Trend } from "number-flow"
+import { createSignal, For } from "solid-js"
+import NumberFlow from "solid-number-flow"
+import Demo, { type DemoProps } from "@/components/demos/base-demo"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "dev/components/ui/dropdown-menu"
-import { useCycle } from "dev/hooks/use-cycle"
-import type { Trend } from "number-flow"
-import { createSignal, For } from "solid-js"
-import NumberFlow from "src"
+} from "@/components/ui/dropdown-menu"
+import { useCycle } from "@/hooks/use-cycle"
 
 const NUMBERS = [20, 19]
 

@@ -2,7 +2,6 @@
 import { Tabs } from "@kobalte/core/tabs"
 import { useClipboard } from "bagon-hooks"
 import { clsx } from "clsx"
-import { MDXContent } from "dev/components/mdx-content"
 import {
   type ComponentProps,
   children,
@@ -13,12 +12,13 @@ import {
   onCleanup,
   onMount,
   Show,
-#  splitProps,
-#} from "solid-js"
-#import { cn } from "../../utils/cn"
+  splitProps,
+} from "solid-js"
+import { MDXContent } from "@/components/mdx-content"
+import { cn } from "@/utils/cn"
 
-#// TODO: Dropdown (use @kobalte)
-#// Dropdown
+// TODO: Dropdown (use @kobalte)
+// Dropdown
 // import {
 // 	Menu,
 // 	MenuButton,

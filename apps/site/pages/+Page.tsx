@@ -1,15 +1,15 @@
-import ContinuousDemo from "dev/components/demos/continuous"
-import GroupDemo from "dev/components/demos/group"
-import IsolateDemo from "dev/components/demos/isolate"
-import StylingDemo from "dev/components/demos/styling"
-import SuffixDemo from "dev/components/demos/suffix"
-import TabularNumsDemo from "dev/components/demos/tabular-nums"
-import TimingsDemo from "dev/components/demos/timings"
-import TrendDemo from "dev/components/demos/trend"
-import { useCycle } from "dev/hooks/use-cycle"
 import type { Format } from "number-flow"
-import NumberFlow from "src"
-import pkgJSON from "src/../package.json"
+import NumberFlow from "solid-number-flow"
+import ContinuousDemo from "@/components/demos/continuous"
+import GroupDemo from "@/components/demos/group"
+import pkgJSON from "../../../packages/solid-number-flow/package.json"
+import IsolateDemo from "../components/demos/isolate"
+import StylingDemo from "../components/demos/styling"
+import SuffixDemo from "../components/demos/suffix"
+import TabularNumsDemo from "../components/demos/tabular-nums"
+import TimingsDemo from "../components/demos/timings"
+import TrendDemo from "../components/demos/trend"
+import { useCycle } from "../hooks/use-cycle"
 import { IconGithub } from "../icons/github"
 import { IconShuffle } from "../icons/shuffle"
 import { IconSolidJS } from "../icons/solidjs"
@@ -168,9 +168,7 @@ export default function HomePage() {
 
         <section>
           <h2 class="mb-4 font-semibold text-2xl">Grouping</h2>
-          <p class="mb-6 text-zinc-400">
-            Sync transitions between multiple components.
-          </p>
+          <p class="mb-6 text-zinc-400">Sync transitions between multiple components.</p>
           <GroupDemo />
         </section>
 

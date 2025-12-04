@@ -1,6 +1,6 @@
-import Demo, { type DemoProps } from "dev/components/demos/base-demo"
-import { useCycle } from "dev/hooks/use-cycle"
-import NumberFlow from "src"
+import NumberFlow from "solid-number-flow"
+import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import { useCycle } from "@/hooks/use-cycle"
 
 const bouncySpring = {
   duration: 750,

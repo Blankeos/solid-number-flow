@@ -1,115 +1,28 @@
 {
-  "name": "solid-number-flow",
-  "version": "0.5.3",
-  "author": "Carlo Taleon",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Blankeos/solid-number-flow.git"
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "number-flow": "0.5.8"
+    }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
     "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
-    "@kobalte/core": "^0.13.11",
-    "@mdx-js/mdx": "^3.1.1",
-    "@shikijs/rehype": "^3.19.0",
-    "@tailwindcss/typography": "^0.5.15",
-    "@tailwindcss/vite": "^4.1.17",
-    "@types/node": "^24.10.1",
-    "auto-changelog": "^2.5.0",
-    "bagon-hooks": "^0.0.5",
-    "clsx": "^2.1.1",
-    "concurrently": "^8.2.2",
-    "jsdom": "^24.0.0",
-    "solid-js": "^1.9.10",
-    "solid-jsx": "^1.1.4",
-    "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^4.1.17",
-    "tsup": "^8.3.0",
-    "tsup-preset-solid": "^2.2.0",
-    "typescript": "^5.6.3",
-    "vike": "^0.4.247",
-    "vike-solid": "^0.7.13",
-    "vite": "^7.2.6",
-    "vite-plugin-solid": "^2.10.2",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^1.6.0"
+    "@changesets/cli": "^2.29.8"
   },
-  "peerDependencies": {
-    "solid-js": "^1.9.4"
-  },
-  "exports": {
-    "solid": {
-      "development": "./dist/dev.jsx",
-      "import": "./dist/index.jsx"
-    },
-    "development": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/dev.js"
-      }
-    },
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
-  "browser": {},
-  "bugs": {
-    "url": "https://github.com/Blankeos/solid-number-flow/issues"
-  },
-  "contributors": [
-    {
-      "name": "Maxwell Barvian",
-      "email": "max@barvian.me",
-      "url": "https://barvian.me"
-    }
-  ],
-  "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
-  "engines": {
-    "node": ">=18"
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://solid-number-flow.pages.dev",
-  "keywords": [
-    "solid",
-    "solid-js",
-    "number-flow",
-    "slot machine",
-    "accessible",
-    "odometer",
-    "animation",
-    "number-format",
-    "number-animation",
-    "animated-number"
-  ],
-  "license": "MIT",
-  "private": false,
   "scripts": {
-    "dev": "vike dev",
-    "build": "tsup",
-    "build:site": "vike build dev",
-    "preview:site": "vike preview dev",
-    "test": "concurrently bun:test:*",
-    "test:client": "vitest",
-    "test:ssr": "bun run test:client --mode ssr",
-    "prepublishOnly": "bun run build",
-    "check": "tsc --noemit",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "update-deps": "bunx npm-check-updates --format group --interactive",
-    "ci": "bun run lint && bun run build",
-    "publish-ci": "bun run lint && bun run build && changeset publish"
-  },
-  "sideEffects": false,
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {},
-  "dependencies": {
-    "number-flow": "0.5.8"
+    "dev": "bun run --filter solid-number-flow dev",
+    "build": "bun run --filter solid-number-flow build",
+    "dev:site": "bun run --filter site dev",
+    "build:site": "bun run --filter site build",
+    "preview:site": "bun run --filter site preview",
+    "test": "bun run --filter solid-number-flow test",
+    "lint": "bun run --filter * lint",
+    "lint:fix": "bun run --filter * lint:fix",
+    "check": "bun run --filter * check",
+    "publish-ci": "bun run --filter solid-number-flow publish-ci"
   }
 }

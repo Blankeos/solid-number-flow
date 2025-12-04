@@ -1,10 +1,9 @@
 import { compile, compileSync, run, runSync } from "@mdx-js/mdx"
 import rehypeShiki from "@shikijs/rehype"
-import theme from "dev/highlighter-theme.json"
 import { getSingletonHighlighter } from "shiki"
-import { createEffect, createRenderEffect, createSignal, type JSX, Show } from "solid-js"
-import { Dynamic } from "solid-js/web"
+import { createEffect, createRenderEffect, createSignal, type JSX } from "solid-js"
 import * as runtime from "solid-jsx"
+import theme from "@/highlighter-theme.json"
 
 interface MDXProps {
   code: string

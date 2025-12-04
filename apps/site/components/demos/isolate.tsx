@@ -1,6 +1,6 @@
-import Demo, { type DemoProps, DemoSwitch } from "dev/components/demos/base-demo"
 import { createSignal } from "solid-js"
-import NumberFlow from "src"
+import NumberFlow from "solid-number-flow"
+import Demo, { type DemoProps, DemoSwitch } from "@/components/demos/base-demo"
 
 export default function IsolateDemo(props: Omit<DemoProps, "children" | "code">) {
   const [increased, setIncreased] = createSignal(false)

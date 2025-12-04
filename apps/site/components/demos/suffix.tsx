@@ -1,6 +1,6 @@
-import Demo, { type DemoProps } from "dev/components/demos/base-demo"
-import { useCycle } from "dev/hooks/use-cycle"
-import NumberFlow, { type Value } from "src"
+import NumberFlow, { type Value } from "solid-number-flow"
+import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import { useCycle } from "@/hooks/use-cycle"
 
 const NUMBERS: Value[] = [3, 15, 50]
 
