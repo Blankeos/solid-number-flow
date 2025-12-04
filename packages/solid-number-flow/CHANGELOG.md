@@ -1,5 +1,17 @@
 # solid-number-flow
 
+## 0.5.4
+
+### Patch Changes
+
+- [`9f25fa3`](https://github.com/Blankeos/solid-number-flow/commit/9f25fa3f6a6aa64e635a9869afa6357d7b32afc1) Thanks [@Blankeos](https://github.com/Blankeos)! - fix: isolate prop now works.
+
+- [`9f25fa3`](https://github.com/Blankeos/solid-number-flow/commit/9f25fa3f6a6aa64e635a9869afa6357d7b32afc1) Thanks [@Blankeos](https://github.com/Blankeos)! - chore: monorepo.
+
+- [`9f25fa3`](https://github.com/Blankeos/solid-number-flow/commit/9f25fa3f6a6aa64e635a9869afa6357d7b32afc1) Thanks [@Blankeos](https://github.com/Blankeos)! - fix: Compatibility with number-flow@0.5.8. fixes #7
+
+- [`9f25fa3`](https://github.com/Blankeos/solid-number-flow/commit/9f25fa3f6a6aa64e635a9869afa6357d7b32afc1) Thanks [@Blankeos](https://github.com/Blankeos)! - chore: better docs, source in biome, more examples.
+
 ## 0.5.3
 
 ### Minor Changes
