@@ -28,7 +28,7 @@ export default function IsolateDemo(props: Omit<DemoProps, "children" | "code">)
       onClick={() => setIncreased((o) => !o)}
     >
       <div class="~text-3xl/4xl flex items-center gap-4">
-        {increased() && <div class="~w-20/40 h-[1em] rounded-sm bg-zinc-800" />}
+        {increased() && <div class="h-[1em] w-40 rounded-sm bg-green-500"></div>}
         <NumberFlow
           locales="en-US"
           isolate={isolate()}
