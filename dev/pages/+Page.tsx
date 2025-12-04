@@ -1,4 +1,5 @@
 import ContinuousDemo from "dev/components/demos/continuous"
+import GroupDemo from "dev/components/demos/group"
 import IsolateDemo from "dev/components/demos/isolate"
 import StylingDemo from "dev/components/demos/styling"
 import SuffixDemo from "dev/components/demos/suffix"
@@ -163,6 +164,14 @@ export default function HomePage() {
           <h2 class="mb-4 font-semibold text-2xl">Styling</h2>
           <p class="mb-6 text-zinc-400">Style specific parts of the component using CSS ::part.</p>
           <StylingDemo />
+        </section>
+
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Grouping</h2>
+          <p class="mb-6 text-zinc-400">
+            Sync transitions between multiple components.
+          </p>
+          <GroupDemo />
         </section>
 
         <section>

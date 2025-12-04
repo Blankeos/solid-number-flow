@@ -10,8 +10,8 @@
   "module": "./dist/index.js",
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.10",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@kobalte/core": "^0.13.11",
     "@mdx-js/mdx": "^3.1.1",
     "@shikijs/rehype": "^3.19.0",
@@ -32,6 +32,7 @@
     "tsup-preset-solid": "^2.2.0",
     "typescript": "^5.6.3",
     "vike": "^0.4.199",
+    "vike-metadata-solid": "^1.0.4",
     "vike-solid": "^0.7.6",
     "vite": "^5.4.9",
     "vite-plugin-solid": "^2.10.2",
