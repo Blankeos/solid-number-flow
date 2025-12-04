@@ -20,9 +20,9 @@
     "build:site": "bun run --filter site build",
     "preview:site": "bun run --filter site preview",
     "test": "bun run --filter solid-number-flow test",
-    "lint": "bun run --filter * lint",
-    "lint:fix": "bun run --filter * lint:fix",
-    "check": "bun run --filter * check",
+    "lint": "bun run --filter '*' lint",
+    "lint:fix": "bun run --filter '*' lint:fix",
+    "check": "bun run --filter '*' check",
     "publish-ci": "bun run --filter solid-number-flow publish-ci"
   }
 }

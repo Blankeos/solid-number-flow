@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
         hot: false,
         // For testing SSR we need to do a SSR JSX transform
         solid: { generate: testSSR ? "ssr" : "dom" },
-      }),
+      }) as any,
     ],
     test: {
       watch: false,
