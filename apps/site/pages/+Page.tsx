@@ -14,6 +14,8 @@ import { IconGithub } from "../icons/github"
 import { IconShuffle } from "../icons/shuffle"
 import { IconSolidJS } from "../icons/solidjs"
 
+import theme from "@/highlighter-theme.json"
+
 const NUMBERS = [321, -3243.6, 42, 398.43, -3243.5, 1435237.2, 12348.43, -3243.6, 54323.2]
 const LOCALES = ["fr-FR", "en-US", "fr-FR", "en-US", "en-US", "zh-CN", "en-US", "en-US", "fr-FR"]
 const FORMATS = [
@@ -55,6 +57,10 @@ const FORMATS = [
 ] as Format[]
 
 import { useMetadata } from "vike-metadata-solid"
+import { MDXContent } from "@/components/mdx-content"
+import NpmInstall from "@/markdown/npm-install.md"
+import { SolidMarkdown } from "solid-markdown"
+import rehypeShiki from "@shikijs/rehype"
 
 export default function HomePage() {
   useMetadata({
@@ -72,14 +78,14 @@ export default function HomePage() {
   }
   return (
     <div class="min-h-screen bg-zinc-950 text-white">
-      <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 py-20">
+      <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 pt-20 pb-5">
         <div class="container inline-flex items-center justify-center whitespace-nowrap text-center">
           <h1 class="font-medium">
             <a class="group/link font-medium" href="/">
               NumberFlow
             </a>
           </h1>
-          &nbsp;<span class="text-muted text-zinc-500">for</span>&nbsp;
+          &nbsp;<span class="text-zinc-500">for</span>&nbsp;
           <button
             class="btn-secondary group inline-flex items-center gap-1 rounded-lg bg-zinc-900 px-2 py-1 pr-1.5 font-medium text-primary transition duration-[.16s] ease-out hover:bg-zinc-800"
             type="button"
@@ -128,6 +134,13 @@ export default function HomePage() {
             number-flow.barvian.me
           </a>
         </p>
+      </div>
+
+
+      <div class="mx-auto w-full max-w-xl px-5 mb-5">
+        <div class="rounded-lg border border-zinc-800 bg-zinc-900 h-12 flex items-center">
+          <MDXContent code={NpmInstall} />
+        </div>
       </div>
 
       <div class="mx-auto flex w-full max-w-xl flex-col gap-y-24 px-5 pb-32">

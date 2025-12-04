@@ -1,5 +1,6 @@
 import NumberFlow, { type Value } from "solid-number-flow"
 import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import Code from "@/components/demos/snippets/styling.mdx"
 import { useCycle } from "@/hooks/use-cycle"
 
 const NUMBERS: Value[] = [3, 15, 50]
@@ -7,19 +8,8 @@ const NUMBERS: Value[] = [3, 15, 50]
 export default function StylingDemo(props: Omit<DemoProps, "children" | "code">) {
   const [value, cycleValue] = useCycle(NUMBERS)
 
-  const code = `
-\`\`\`css
-number-flow::part(suffix) {
-  margin-left: .0625em;
-  font-weight: normal;
-  font-size: 0.75em;
-  color: var(--muted);
-}
-\`\`\`
-`
-
   return (
-    <Demo {...props} code={code} onClick={cycleValue}>
+    <Demo {...props} code={Code} onClick={cycleValue}>
       <NumberFlow
         locales="en-US"
         value={value()}

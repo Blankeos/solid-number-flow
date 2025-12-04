@@ -1,5 +1,6 @@
 import NumberFlow, { type Value } from "solid-number-flow"
 import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import Code from "@/components/demos/snippets/suffix.mdx"
 import { useCycle } from "@/hooks/use-cycle"
 
 const NUMBERS: Value[] = [3, 15, 50]
@@ -7,18 +8,8 @@ const NUMBERS: Value[] = [3, 15, 50]
 export default function SuffixDemo(props: Omit<DemoProps, "children" | "code">) {
   const [value, cycleValue] = useCycle(NUMBERS)
 
-  const code = `
-\`\`\`tsx
-<NumberFlow
-  value={value}
-  format={{ style: 'currency', currency: 'USD', trailingZeroDisplay: 'stripIfInteger' }}
-  suffix="/mo"
-/>
-\`\`\`
-`
-
   return (
-    <Demo {...props} code={code} onClick={cycleValue}>
+    <Demo {...props} code={Code} onClick={cycleValue}>
       <NumberFlow
         locales="en-US"
         value={value()}

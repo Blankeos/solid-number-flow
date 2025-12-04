@@ -1,6 +1,5 @@
 // Tabs
 import { Tabs } from "@kobalte/core/tabs"
-import { useClipboard } from "bagon-hooks"
 import { clsx } from "clsx"
 import {
   type ComponentProps,
@@ -13,6 +12,7 @@ import {
   onMount,
   Show,
   splitProps,
+  type Component,
 } from "solid-js"
 import { MDXContent } from "@/components/mdx-content"
 import { cn } from "@/utils/cn"
@@ -48,7 +48,7 @@ export type DemoProps = {
   children: JSX.Element
   class?: string
   defaultValue?: TabValue
-  code?: string
+  code?: Component
   minHeight?: string
   title?: JSX.Element
 }
@@ -68,8 +68,6 @@ function Demo(props: FlowProps<Props>) {
 
   const [knowsToClick, setKnowsToClick] = createSignal(false)
   const [active, setActive] = createSignal(_props.defaultValue)
-
-  const { copy, copied } = useClipboard()
 
   function handleClick() {
     if (!_props.onClick) return
@@ -170,54 +168,9 @@ function Demo(props: FlowProps<Props>) {
             </div>
           </Tabs.Content>
         </Show>
-        <Show when={active() === "code" && _props.code}>
-          <Tabs.Content value="code" class="relative overflow-hidden p-3 text-sm">
+        <Show when={_props.code}>
+          <Tabs.Content value="code" class={clsx("min-h-25 relative overflow-hidden text-sm", active() !== "code" && "hidden")} forceMount>
             <MDXContent code={_props.code!} />
-            <button
-              onClick={() => {
-                const code = _props.code || ""
-                const trimmedCode = code
-                  .replace(/^\s*```tsx\s*\n?/, "") // Remove ```tsx from beginning
-                  .replace(/\n?\s*```\s*$/, "") // Remove ``` from end
-                copy(trimmedCode)
-              }}
-              class="absolute right-2 bottom-2 animate-fadeIn rounded-md bg-white/10 p-1 transition-colors hover:bg-white/20"
-            >
-              <Show
-                when={!copied()}
-                fallback={
-                  <svg
-                    class="h-4 w-4 animate-scale-in text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                }
-              >
-                <svg
-                  class="h-4 w-4 animate-scale-in text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                  ></path>
-                </svg>
-              </Show>
-            </button>
           </Tabs.Content>
         </Show>
       </Collapsible>
@@ -415,7 +368,7 @@ export function Collapsible(props: CollapsibleProps) {
   return (
     <div
       style={{ height: heightStyle() }}
-      class={cn("overflow-hidden transition-[width,height] duration-400", local.containerClass)}
+      class={cn("overflow-hidden transition-[width,height] duration-350 ease-in-out", local.containerClass)}
       aria-hidden={!local.open}
       {...others}
     >

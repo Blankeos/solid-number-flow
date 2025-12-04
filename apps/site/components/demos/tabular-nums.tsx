@@ -1,26 +1,16 @@
 import { createSignal } from "solid-js"
 import NumberFlow from "solid-number-flow"
 import Demo, { type DemoProps, DemoSwitch } from "@/components/demos/base-demo"
+import Code from "@/components/demos/snippets/tabular-nums.mdx"
 
 export default function TabularNumsDemo(props: Omit<DemoProps, "children" | "code">) {
   const [value, setValue] = createSignal(10)
   const [tabularNums, setTabularNums] = createSignal(false)
 
-  const code = `
-\`\`\`tsx
-<NumberFlow
-  style={{
-    fontVariantNumeric: ${tabularNums() ? "'tabular-nums'" : "undefined"}
-  }}
-  value={value}
-/>
-\`\`\`
-`
-
   return (
     <Demo
       {...props}
-      code={code}
+      code={Code}
       title={
         <DemoSwitch checked={tabularNums()} onChange={setTabularNums}>
           <code class="font-semibold">tabular-nums</code>

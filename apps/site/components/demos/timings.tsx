@@ -1,5 +1,6 @@
 import NumberFlow from "solid-number-flow"
 import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import Code from "@/components/demos/snippets/timings.mdx"
 import { useCycle } from "@/hooks/use-cycle"
 
 const bouncySpring = {
@@ -15,19 +16,8 @@ const NUMBERS = [124.23, 41.75, 2125.95]
 export default function TimingsDemo(props: Omit<DemoProps, "children" | "code">) {
   const [value, cycleValue] = useCycle(NUMBERS)
 
-  const code = `
-\`\`\`tsx
-<NumberFlow
-  transformTiming={{ duration: 750, easing: 'linear(...)' }}
-  spinTiming={{ duration: 750, easing: 'linear(...)' }}
-  opacityTiming={{ duration: 350, easing: 'ease-out' }}
-  value={value}
-/>
-\`\`\`
-`
-
   return (
-    <Demo {...props} code={code} onClick={cycleValue}>
+    <Demo {...props} code={Code} onClick={cycleValue}>
       <NumberFlow
         locales="en-US"
         value={value()}

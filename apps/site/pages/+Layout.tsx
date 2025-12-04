@@ -1,6 +1,7 @@
 import type { FlowProps } from "solid-js"
 import "../styles.css"
 import { useMetadata } from "vike-metadata-solid"
+import { MarkdownContextProvider } from "@/components/markdown.context"
 
 useMetadata.setGlobalDefaults({
   title: "Solid Number Flow",
@@ -24,5 +25,5 @@ useMetadata.setGlobalDefaults({
 })
 
 export default function Layout(props: FlowProps) {
-  return <>{props.children}</>
+  return <MarkdownContextProvider>{props.children}</MarkdownContextProvider>
 }

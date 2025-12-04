@@ -2,6 +2,7 @@ import type { Trend } from "number-flow"
 import { createSignal, For } from "solid-js"
 import NumberFlow from "solid-number-flow"
 import Demo, { type DemoProps } from "@/components/demos/base-demo"
+import Code from "@/components/demos/snippets/trend.mdx"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,19 +26,10 @@ export default function TrendDemo(props: Omit<DemoProps, "children" | "code">) {
   const [option, setOption] = createSignal<keyof typeof TRENDS>("default")
   const trend = () => TRENDS[option()]
 
-  const code = `
-\`\`\`tsx
-<NumberFlow
-  trend={${trend() ?? "undefined"}}
-  value={value}
-/>
-\`\`\`
-`
-
   return (
     <Demo
       {...props}
-      code={code}
+      code={Code}
       title={
         <DropdownMenu>
           <DropdownMenuTrigger class="flex items-center gap-1 rounded-md px-2 py-1 text-xs outline-none transition-colors hover:bg-zinc-800">
