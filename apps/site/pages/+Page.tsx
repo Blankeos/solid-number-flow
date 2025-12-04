@@ -2,6 +2,7 @@ import type { Format } from "number-flow"
 import NumberFlow from "solid-number-flow"
 import ContinuousDemo from "@/components/demos/continuous"
 import GroupDemo from "@/components/demos/group"
+import theme from "@/highlighter-theme.json"
 import pkgJSON from "../../../packages/solid-number-flow/package.json"
 import IsolateDemo from "../components/demos/isolate"
 import StylingDemo from "../components/demos/styling"
@@ -13,8 +14,6 @@ import { useCycle } from "../hooks/use-cycle"
 import { IconGithub } from "../icons/github"
 import { IconShuffle } from "../icons/shuffle"
 import { IconSolidJS } from "../icons/solidjs"
-
-import theme from "@/highlighter-theme.json"
 
 const NUMBERS = [321, -3243.6, 42, 398.43, -3243.5, 1435237.2, 12348.43, -3243.6, 54323.2]
 const LOCALES = ["fr-FR", "en-US", "fr-FR", "en-US", "en-US", "zh-CN", "en-US", "en-US", "fr-FR"]
@@ -134,9 +133,8 @@ export default function HomePage() {
         </p>
       </div>
 
-
-      <div class="mx-auto w-full max-w-xl px-5 mb-5">
-        <div class="rounded-lg border border-zinc-800 bg-zinc-900 h-12 flex items-center">
+      <div class="mx-auto mb-5 w-full max-w-xl px-5">
+        <div class="flex h-12 items-center rounded-lg border border-zinc-800 bg-zinc-900">
           <MDXContent code={NpmInstall} />
         </div>
       </div>

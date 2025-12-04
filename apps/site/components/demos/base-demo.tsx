@@ -2,6 +2,7 @@
 import { Tabs } from "@kobalte/core/tabs"
 import { clsx } from "clsx"
 import {
+  type Component,
   type ComponentProps,
   children,
   createSignal,
@@ -12,7 +13,6 @@ import {
   onMount,
   Show,
   splitProps,
-  type Component,
 } from "solid-js"
 import { MDXContent } from "@/components/mdx-content"
 import { cn } from "@/utils/cn"
@@ -169,7 +169,14 @@ function Demo(props: FlowProps<Props>) {
           </Tabs.Content>
         </Show>
         <Show when={_props.code}>
-          <Tabs.Content value="code" class={clsx("min-h-25 relative overflow-hidden text-sm", active() !== "code" && "hidden")} forceMount>
+          <Tabs.Content
+            value="code"
+            class={clsx(
+              "relative min-h-25 overflow-hidden text-sm",
+              active() !== "code" && "hidden"
+            )}
+            forceMount
+          >
             <MDXContent code={_props.code!} />
           </Tabs.Content>
         </Show>
@@ -368,7 +375,10 @@ export function Collapsible(props: CollapsibleProps) {
   return (
     <div
       style={{ height: heightStyle() }}
-      class={cn("overflow-hidden transition-[width,height] duration-350 ease-in-out", local.containerClass)}
+      class={cn(
+        "overflow-hidden transition-[width,height] duration-350 ease-in-out",
+        local.containerClass
+      )}
       aria-hidden={!local.open}
       {...others}
     >

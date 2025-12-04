@@ -1,25 +1,24 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "ESNext",
-    "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
     "esModuleInterop": true,
-    "noEmit": true,
-    "isolatedModules": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noUncheckedIndexedAccess": true,
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": ["vite/client"],
-    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "module": "ESNext",
+    "noEmit": true,
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["vite/client", "vike-solid/client"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   },
-  "exclude": ["node_modules", "dist", "./dev", "_context"]
+  "exclude": ["dist"]
 }

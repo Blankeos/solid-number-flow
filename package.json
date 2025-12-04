@@ -14,7 +14,8 @@
     "lint": "bun run --filter '*' lint",
     "lint:fix": "bun run --filter '*' lint:fix",
     "check": "bun run --filter '*' check",
-    "publish-ci": "bun run lint && bun run build && changeset publish"
+    "publish-ci": "bun run lint && bun run build && changeset publish",
+    "clean": "rm -rf node_modules && rm -rf apps/*/node_modules && rm -rf packages/*/node_modules"
   },
   "workspaces": {
     "packages": [
