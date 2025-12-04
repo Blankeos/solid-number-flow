@@ -9,11 +9,13 @@ import NumberFlowLite, {
 } from "number-flow/lite"
 import {
   type Accessor,
+  createComputed,
   createContext,
   createEffect,
   createMemo,
   createSignal,
   type FlowProps,
+  on,
   onCleanup,
   onMount,
   splitProps,
@@ -72,11 +74,14 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
   const updateProperties = (prevProps?: NumberFlowImplProps_NoSignals) => {
     if (!el) return
 
-    // el.batched = !props.isolate (Not sure why but this breaks the animations, so isolate might not work right now. I personally think it has a very niche usecase though).
+    el.batched = !props.isolate
     if (props.transformTiming)
-      el.transformTiming ?? NumberFlowElement.defaultProps["transformTiming"]
-    if (props.spinTiming) el.spinTiming ?? NumberFlowElement.defaultProps["spinTiming"]
-    if (props.opacityTiming) el.opacityTiming ?? NumberFlowElement.defaultProps["opacityTiming"]
+      el.transformTiming =
+        props.transformTiming ?? NumberFlowElement.defaultProps["transformTiming"]
+    if (props.spinTiming)
+      el.spinTiming = props.spinTiming ?? NumberFlowElement.defaultProps["spinTiming"]
+    if (props.opacityTiming)
+      el.opacityTiming = props.opacityTiming ?? NumberFlowElement.defaultProps["opacityTiming"]
     if (props.animated != null) el.animated = props.animated
     if (props.respectMotionPreference != null)
       el.respectMotionPreference = props.respectMotionPreference
@@ -107,31 +112,58 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
     }
   })
 
-  // Equivalent of getSnapshotBeforeUpdate
-  // @ts-expect-error
+  // Update non-data properties when they change
+  // @ts-expect-error - using return value for prev props tracking
   createEffect((prevProps?: NumberFlowImplProps_NoSignals) => {
     updateProperties(prevProps)
-
-    // eslint-disable-next-line solid/reactivity
-    if (prevProps?.data !== props.data()) {
-      if (props.group()) {
-        props.group()!.willUpdate()
-        props.group()!.didUpdate()
-        return
-      }
-      if (!props.isolate) {
-        el?.willUpdate()
-        el?.didUpdate()
-        return
-      }
-    }
-
     return {
       ...props,
       group: props.group(),
       data: props.data(),
     }
   })
+
+  // Track whether we've mounted (to skip initial render)
+  let mounted = false
+  onMount(() => {
+    mounted = true
+  })
+
+  // Equivalent of getSnapshotBeforeUpdate: call willUpdate() BEFORE DOM changes
+  // createComputed runs synchronously during the reactive update phase, before effects/rendering
+  createComputed(
+    on(
+      () => props.data(),
+      (current, prev) => {
+        // Skip initial render, only run on updates after mount
+        if (!mounted || !el || current === prev) return
+
+        if (props.group()) {
+          props.group()!.willUpdate()
+        } else if (!props.isolate) {
+          el.willUpdate()
+        }
+      }
+    )
+  )
+
+  // Equivalent of componentDidUpdate: call didUpdate() AFTER DOM changes
+  // createEffect runs after DOM updates
+  createEffect(
+    on(
+      () => props.data(),
+      (current, prev) => {
+        // Skip initial render, only run on updates after mount
+        if (!mounted || !el || current === prev) return
+
+        if (props.group()) {
+          props.group()!.didUpdate()
+        } else if (!props.isolate) {
+          el.didUpdate()
+        }
+      }
+    )
+  )
 
   /**
    * It's exactly like a signal setter, but we're setting two things:
