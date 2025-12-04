@@ -85,8 +85,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "update-deps": "bunx npm-check-updates --format group --interactive",
-    "ci": "bun run lint && bun run build",
-    "publish-ci": "bun run lint && bun run build && changeset publish"
+    "ci": "bun run lint && bun run build"
   },
   "sideEffects": false,
   "type": "module",
