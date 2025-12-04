@@ -1,5 +1,11 @@
 # solid-number-flow
 
+## 0.5.5
+
+### Patch Changes
+
+- [`bd2b5b9`](https://github.com/Blankeos/solid-number-flow/commit/bd2b5b94154916375c07222e06cc2d968edf8741) Thanks [@Blankeos](https://github.com/Blankeos)! - fix: removed `catalog:` in package (it was bad).
+
 ## 0.5.4
 
 ### Patch Changes
