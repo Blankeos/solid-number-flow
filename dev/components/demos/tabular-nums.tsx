@@ -1,4 +1,4 @@
-import Demo, { DemoSwitch, type DemoProps } from "dev/components/demos/base-demo"
+import Demo, { type DemoProps, DemoSwitch } from "dev/components/demos/base-demo"
 import { createSignal } from "solid-js"
 import NumberFlow from "src"
 

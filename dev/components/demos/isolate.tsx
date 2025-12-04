@@ -1,4 +1,4 @@
-import Demo, { DemoSwitch, type DemoProps } from "dev/components/demos/base-demo"
+import Demo, { type DemoProps, DemoSwitch } from "dev/components/demos/base-demo"
 import { createSignal } from "solid-js"
 import NumberFlow from "src"
 
@@ -28,7 +28,7 @@ export default function IsolateDemo(props: Omit<DemoProps, "children" | "code">)
       onClick={() => setIncreased((o) => !o)}
     >
       <div class="~text-3xl/4xl flex items-center gap-4">
-        {increased() && <div class="bg-zinc-800 ~w-20/40 h-[1em] rounded-sm" />}
+        {increased() && <div class="~w-20/40 h-[1em] rounded-sm bg-zinc-800" />}
         <NumberFlow
           locales="en-US"
           isolate={isolate()}

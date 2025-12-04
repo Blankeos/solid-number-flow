@@ -40,7 +40,7 @@ export default function TrendDemo(props: Omit<DemoProps, "children" | "code">) {
       code={code}
       title={
         <DropdownMenu>
-          <DropdownMenuTrigger class="flex items-center gap-1 rounded-md px-2 py-1 text-xs hover:bg-zinc-800 transition-colors outline-none">
+          <DropdownMenuTrigger class="flex items-center gap-1 rounded-md px-2 py-1 text-xs outline-none transition-colors hover:bg-zinc-800">
             <code class="text-muted text-zinc-500">trend:</code>
             <code class="font-semibold">{option()}</code>
             <svg

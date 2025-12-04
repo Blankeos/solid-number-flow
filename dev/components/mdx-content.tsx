@@ -1,12 +1,10 @@
 import { compile, compileSync, run, runSync } from "@mdx-js/mdx"
+import rehypeShiki from "@shikijs/rehype"
 import theme from "dev/highlighter-theme.json"
 import { getSingletonHighlighter } from "shiki"
 import { createEffect, createRenderEffect, createSignal, type JSX, Show } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import * as runtime from "solid-jsx"
-
-
-import rehypeShiki from "@shikijs/rehype"
 
 interface MDXProps {
   code: string
@@ -90,9 +88,9 @@ export const MDXContent = (props: MDXProps): JSX.Element => {
           rehypePlugins: [
             [
               rehypeShiki, // Adds syntax-highlighting for code blocks.
-              { theme: theme }
-            ]
-          ]
+              { theme: theme },
+            ],
+          ],
         })
         setMdxModule(await run(String(compiled), { ...(runtime as any), baseUrl: import.meta.url }))
       } catch (e) {
@@ -112,7 +110,6 @@ export const MDXContent = (props: MDXProps): JSX.Element => {
   const Content = () => mdxModule()?.default || (() => null)
 
   return Content as unknown as JSX.Element
-
 }
 
 // export const MDXContent = (props: MDXProps): JSX.Element => {
@@ -128,7 +125,6 @@ export const MDXContent = (props: MDXProps): JSX.Element => {
 
 //   return Content as unknown as JSX.Element
 // }
-
 
 export const MDXContentStatic = (props: MDXProps): JSX.Element => {
   try {
