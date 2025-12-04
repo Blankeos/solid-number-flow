@@ -17,7 +17,7 @@
     "dev": "bun run --filter solid-number-flow dev",
     "build": "bun run --filter solid-number-flow build",
     "dev:site": "bun run --filter site dev",
-    "build:site": "bun run --filter site build",
+    "build:site": "bun run --filter solid-number-flow build && bun run --filter site build",
     "preview:site": "bun run --filter site preview",
     "test": "bun run --filter solid-number-flow test",
     "lint": "bun run --filter '*' lint",
