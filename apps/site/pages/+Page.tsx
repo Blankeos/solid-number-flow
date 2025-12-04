@@ -54,7 +54,13 @@ const FORMATS = [
   },
 ] as Format[]
 
+import { useMetadata } from "vike-metadata-solid"
+
 export default function HomePage() {
+  useMetadata({
+    title: "Solid Number Flow",
+  })
+
   const [value, cycleValue] = useCycle(NUMBERS)
   const [locale, cycleLocale] = useCycle(LOCALES)
   const [format, cycleFormat] = useCycle(FORMATS)

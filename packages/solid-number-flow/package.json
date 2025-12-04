@@ -1,5 +1,6 @@
 {
   "name": "solid-number-flow",
+  "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
   "version": "0.5.3",
   "author": "Carlo Taleon",
   "repository": {
@@ -50,7 +51,6 @@
       "url": "https://barvian.me"
     }
   ],
-  "description": "A SolidJS component to transition, format, and localize numbers. Forked from @barvian/number-flow.",
   "engines": {
     "node": ">=18"
   },
