@@ -1,5 +1,5 @@
-import { defineConfig } from 'tsup'
-import * as preset from 'tsup-preset-solid'
+import { defineConfig } from "tsup"
+import * as preset from "tsup-preset-solid"
 
 const preset_options: preset.PresetOptions = {
   // array or single object
@@ -7,7 +7,7 @@ const preset_options: preset.PresetOptions = {
     // default entry (index)
     {
       // entries with '.tsx' extension will have `solid` export condition generated
-      entry: 'src/index.tsx',
+      entry: "src/index.tsx",
       // will generate a separate development entry
       dev_entry: true,
     },
@@ -19,12 +19,12 @@ const preset_options: preset.PresetOptions = {
 }
 
 const CI =
-  process.env['CI'] === 'true' ||
-  process.env['GITHUB_ACTIONS'] === 'true' ||
-  process.env['CI'] === '"1"' ||
-  process.env['GITHUB_ACTIONS'] === '"1"'
+  process.env["CI"] === "true" ||
+  process.env["GITHUB_ACTIONS"] === "true" ||
+  process.env["CI"] === '"1"' ||
+  process.env["GITHUB_ACTIONS"] === '"1"'
 
-export default defineConfig(config => {
+export default defineConfig((config) => {
   const watching = !!config.watch
 
   const parsed_options = preset.parsePresetOptions(preset_options, watching)

@@ -1,23 +1,20 @@
-import ContinuousDemo from 'dev/components/demos/continuous';
-import TrendDemo from 'dev/components/demos/trend';
-import { useCycle } from 'dev/hooks/use-cycle';
-import { Format } from 'number-flow';
-import NumberFlow from 'src';
-import { IconGithub } from '../icons/github';
-import { IconShuffle } from '../icons/shuffle';
-import { IconSolidJS } from '../icons/solidjs';
-import { Markdown } from '../markdown';
+import ContinuousDemo from "dev/components/demos/continuous"
+import TrendDemo from "dev/components/demos/trend"
+import { useCycle } from "dev/hooks/use-cycle"
+import type { Format } from "number-flow"
+import NumberFlow from "src"
+import pkgJSON from "src/../package.json"
+import { IconGithub } from "../icons/github"
+import { IconShuffle } from "../icons/shuffle"
+import { IconSolidJS } from "../icons/solidjs"
+import { Markdown } from "../markdown"
+// @ts-expect-error idk what type I need to override.
+import NPMInstall from "../markdown/npm-install.md"
+// @ts-expect-error idk what type I need to override.
+import Usage from "../markdown/usage.md"
 
-import pkgJSON from 'src/../package.json';
-
-// @ts-ignore idk what type I need to override.
-import Usage from '../markdown/usage.md';
-
-// @ts-ignore idk what type I need to override.
-import NPMInstall from '../markdown/npm-install.md';
-
-const NUMBERS = [321, -3243.6, 42, 398.43, -3243.5, 1435237.2, 12348.43, -3243.6, 54323.2];
-const LOCALES = ['fr-FR', 'en-US', 'fr-FR', 'en-US', 'en-US', 'zh-CN', 'en-US', 'en-US', 'fr-FR'];
+const NUMBERS = [321, -3243.6, 42, 398.43, -3243.5, 1435237.2, 12348.43, -3243.6, 54323.2]
+const LOCALES = ["fr-FR", "en-US", "fr-FR", "en-US", "en-US", "zh-CN", "en-US", "en-US", "fr-FR"]
 const FORMATS = [
   {
     // style: "unit",
@@ -26,51 +23,51 @@ const FORMATS = [
     // signDisplay: "never",
   },
   {
-    style: 'currency',
-    currency: 'USD',
-    currencySign: 'accounting',
-    signDisplay: 'always',
+    style: "currency",
+    currency: "USD",
+    currencySign: "accounting",
+    signDisplay: "always",
   },
   {},
   {
-    style: 'percent',
-    signDisplay: 'always',
+    style: "percent",
+    signDisplay: "always",
   },
   {},
   {
-    style: 'unit',
-    unit: 'meter',
-    notation: 'compact',
+    style: "unit",
+    unit: "meter",
+    notation: "compact",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-    signDisplay: 'never',
+    signDisplay: "never",
   },
   {
-    style: 'currency',
-    currency: 'USD',
+    style: "currency",
+    currency: "USD",
   },
   {},
   {
     // style: "percent",
-    signDisplay: 'always',
+    signDisplay: "always",
   },
-] as Format[];
+] as Format[]
 
 export default function HomePage() {
-  const [value, cycleValue] = useCycle(NUMBERS);
-  const [locale, cycleLocale] = useCycle(LOCALES);
-  const [format, cycleFormat] = useCycle(FORMATS);
+  const [value, cycleValue] = useCycle(NUMBERS)
+  const [locale, cycleLocale] = useCycle(LOCALES)
+  const [format, cycleFormat] = useCycle(FORMATS)
 
   function cycle() {
-    cycleValue();
-    cycleLocale();
-    cycleFormat();
+    cycleValue()
+    cycleLocale()
+    cycleFormat()
   }
   return (
     <div class="min-h-screen bg-zinc-950 text-white">
       <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 py-20">
         <span class="flex items-center gap-x-1.5 text-base">
-          <IconSolidJS class="h-6 w-6" /> NumberFlow{' '}
+          <IconSolidJS class="h-6 w-6" /> NumberFlow{" "}
           <span class="text-sm text-zinc-400">v{pkgJSON.version}</span>
         </span>
         <NumberFlow
@@ -94,6 +91,7 @@ export default function HomePage() {
             href="https://github.com/blankeos/solid-number-flow"
             target="_blank"
             class="rounded-full border border-white p-2 transition hover:bg-neutral-50/20 active:scale-95"
+            rel="noopener"
           >
             <IconGithub class="h-5 w-5" />
           </a>
@@ -106,8 +104,13 @@ export default function HomePage() {
         </p>
 
         <p class="text-zinc-400">
-          Ported from{' '}
-          <a href="https://github.com/barvian/number-flow" class="hover:underline" target="_blank">
+          Ported from{" "}
+          <a
+            href="https://github.com/barvian/number-flow"
+            class="hover:underline"
+            target="_blank"
+            rel="noopener"
+          >
             barvian/number-flow
           </a>
         </p>
@@ -132,5 +135,5 @@ export default function HomePage() {
 
       <div class="h-20" />
     </div>
-  );
+  )
 }

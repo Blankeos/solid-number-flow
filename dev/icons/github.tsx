@@ -1,4 +1,4 @@
-import { JSX, VoidProps } from 'solid-js';
+import type { JSX, VoidProps } from "solid-js"
 
 export function IconGithub(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>) {
   return (
@@ -53,5 +53,5 @@ export function IconGithub(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>) 
         />
       </rect>
     </svg>
-  );
+  )
 }

@@ -7,121 +7,122 @@ import {
   type Props,
   renderInnerHTML,
   type Value,
-} from 'number-flow';
+} from "number-flow"
 import {
-  Accessor,
+  type Accessor,
   createContext,
   createEffect,
   createMemo,
   createSignal,
-  FlowProps,
+  type FlowProps,
   onCleanup,
   onMount,
   splitProps,
   useContext,
-  VoidProps,
-} from 'solid-js';
-import { JSX } from 'solid-js/jsx-runtime';
-import { Dynamic } from 'solid-js/web';
-export type { Format, Trend, Value } from 'number-flow';
+  type VoidProps,
+} from "solid-js"
+import type { JSX } from "solid-js/jsx-runtime"
+import { Dynamic } from "solid-js/web"
+
+export type { Format, Trend, Value } from "number-flow"
 
 // Can't wait to not have to do this in React 19:
-const OBSERVED_ATTRIBUTES = ['data', 'digits'] as const;
-type ObservedAttribute = (typeof OBSERVED_ATTRIBUTES)[number];
+const OBSERVED_ATTRIBUTES = ["data", "digits"] as const
+type ObservedAttribute = (typeof OBSERVED_ATTRIBUTES)[number]
 export class NumberFlowElement extends NumberFlowLite {
-  static observedAttributes = OBSERVED_ATTRIBUTES;
+  static observedAttributes = OBSERVED_ATTRIBUTES
   attributeChangedCallback(_attr: ObservedAttribute, _oldValue: string, _newValue: string) {
     // this[attr] = JSON.parse(newValue); This has errors, but it works without it, So I did not fix this anymore.
   }
 }
 
-define('number-flow', NumberFlowElement);
+define("number-flow", NumberFlowElement)
 
 type BaseProps = JSX.HTMLAttributes<NumberFlowElement> &
   Partial<Props> & {
-    isolate?: boolean;
-    willChange?: boolean;
-    onAnimationsStart?: (e: CustomEvent<undefined>) => void;
-    onAnimationsFinish?: (e: CustomEvent<undefined>) => void;
-  };
+    isolate?: boolean
+    willChange?: boolean
+    onAnimationsStart?: (e: CustomEvent<undefined>) => void
+    onAnimationsFinish?: (e: CustomEvent<undefined>) => void
+  }
 
 type NumberFlowImplProps = BaseProps & {
-  innerRef: NumberFlowElement | undefined;
-  group: Accessor<GroupContext | undefined>;
-  data: Accessor<Data | undefined>;
-};
+  innerRef: NumberFlowElement | undefined
+  group: Accessor<GroupContext | undefined>
+  data: Accessor<Data | undefined>
+}
 
 // You're supposed to cache these between uses:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
 // Serialize to strings b/c React:
-const formatters: Record<string, Intl.NumberFormat> = {};
+const formatters: Record<string, Intl.NumberFormat> = {}
 
 // ===========================================================================
 // IMPLEMENTATION (Equivalent to the React Class Component)
 // ===========================================================================
 /** Used for `prevProps` because accessing signals always gives "latest" values, we don't want that. */
-type NumberFlowImplProps_NoSignals = Omit<NumberFlowImplProps, 'parts'> & {
-  group: GroupContext | undefined;
-  data: Data | undefined;
-};
+type NumberFlowImplProps_NoSignals = Omit<NumberFlowImplProps, "parts"> & {
+  group: GroupContext | undefined
+  data: Data | undefined
+}
 
 function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
-  let el: NumberFlowElement | undefined;
+  let el: NumberFlowElement | undefined
 
   const updateProperties = (prevProps?: NumberFlowImplProps_NoSignals) => {
-    if (!el) return;
+    if (!el) return
 
     // // el.manual = !props.isolate; (Not sure why but this breaks the animations, so isolate might not work right now. I personally think it has a very niche usecase though).
     if (props.transformTiming)
-      el.transformTiming ?? NumberFlowElement.defaultProps['transformTiming'];
-    if (props.spinTiming) el.spinTiming ?? NumberFlowElement.defaultProps['spinTiming'];
-    if (props.opacityTiming) el.opacityTiming ?? NumberFlowElement.defaultProps['opacityTiming'];
-    if (props.animated != null) el.animated = props.animated;
+      el.transformTiming ?? NumberFlowElement.defaultProps["transformTiming"]
+    if (props.spinTiming) el.spinTiming ?? NumberFlowElement.defaultProps["spinTiming"]
+    if (props.opacityTiming) el.opacityTiming ?? NumberFlowElement.defaultProps["opacityTiming"]
+    if (props.animated != null) el.animated = props.animated
     if (props.respectMotionPreference != null)
-      el.respectMotionPreference = props.respectMotionPreference;
-    if (props.trend != null) el.trend = props.trend;
-    if (props.plugins != null) el.plugins = props.plugins;
+      el.respectMotionPreference = props.respectMotionPreference
+    if (props.trend != null) el.trend = props.trend
+    if (props.plugins != null) el.plugins = props.plugins
 
     // eslint-disable-next-line solid/reactivity
     if (prevProps?.onAnimationsStart)
       // eslint-disable-next-line solid/reactivity
-      el.removeEventListener('onanimationsstart', prevProps.onAnimationsStart as EventListener);
+      el.removeEventListener("onanimationsstart", prevProps.onAnimationsStart as EventListener)
     if (props.onAnimationsStart)
-      el.addEventListener('animationsstart', props.onAnimationsStart as EventListener);
+      el.addEventListener("animationsstart", props.onAnimationsStart as EventListener)
 
     // eslint-disable-next-line solid/reactivity
     if (prevProps?.onAnimationsFinish)
       // eslint-disable-next-line solid/reactivity
-      el.removeEventListener('onanimationsfinish', prevProps.onAnimationsFinish as EventListener);
+      el.removeEventListener("onanimationsfinish", prevProps.onAnimationsFinish as EventListener)
     if (props.onAnimationsFinish)
-      el.addEventListener('onanimationsfinish', props.onAnimationsFinish as EventListener);
-  };
+      el.addEventListener("onanimationsfinish", props.onAnimationsFinish as EventListener)
+  }
 
   // Equivalent of componentDidMount
   onMount(() => {
-    updateProperties();
+    updateProperties()
     if (el) {
-      el.digits = props.digits;
-      el.data = props.data();
+      el.digits = props.digits
+      el.data = props.data()
     }
-  });
+  })
 
   // Equivalent of getSnapshotBeforeUpdate
-  // @ts-ignore
+  // @ts-expect-error
   createEffect((prevProps?: NumberFlowImplProps_NoSignals) => {
-    updateProperties(prevProps);
+    updateProperties(prevProps)
 
     // eslint-disable-next-line solid/reactivity
     if (prevProps?.data !== props.data()) {
       if (props.group()) {
-        props.group()!.willUpdate();
-        props.group()!.didUpdate();
-        return;
+        props.group()!.willUpdate()
+        props.group()!.didUpdate()
+        return
       }
       if (!props.isolate) {
-        el?.willUpdate();
-        el?.didUpdate();
-        return;
+        el?.willUpdate()
+        el?.didUpdate()
+        return
       }
     }
 
@@ -129,8 +130,8 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
       ...props,
       group: props.group(),
       data: props.data(),
-    };
-  });
+    }
+  })
 
   /**
    * It's exactly like a signal setter, but we're setting two things:
@@ -139,34 +140,34 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
    */
   const handleRef = (elRef: NumberFlowElement) => {
     // eslint-disable-next-line solid/reactivity
-    props.innerRef = elRef;
-    el = elRef;
-  };
+    props.innerRef = elRef
+    el = elRef
+  }
 
   const [_used, others] = splitProps(props, [
     // Remove the 'used'
-    'class',
-    'aria-label',
-    'role',
-    'digits',
-    'data',
-    'innerHTML',
+    "class",
+    "aria-label",
+    "role",
+    "digits",
+    "data",
+    "innerHTML",
     // Also remove the ones used in `updateProperties`
-    'transformTiming',
-    'spinTiming',
-    'opacityTiming',
-    'animated',
-    'respectMotionPreference',
-    'trend',
-    'plugins',
-  ]);
+    "transformTiming",
+    "spinTiming",
+    "opacityTiming",
+    "animated",
+    "respectMotionPreference",
+    "trend",
+    "plugins",
+  ])
 
   return (
     <Dynamic
       component="number-flow"
       ref={handleRef}
       //   https://docs.solidjs.com/reference/jsx-attributes/attr
-      attr:data-will-change={props.willChange ? '' : undefined}
+      attr:data-will-change={props.willChange ? "" : undefined}
       class={props.class}
       aria-label={props.data()?.valueAsString}
       {...others}
@@ -177,38 +178,38 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
       // eslint-disable-next-line solid/no-innerhtml
       innerHTML={renderInnerHTML(props.data()!)}
     />
-  );
+  )
 }
 
 // ===========================================================================
 // ROOT
 // ===========================================================================
 export type NumberFlowProps = BaseProps & {
-  value: Value;
-  locales?: Intl.LocalesArgument;
-  format?: Format;
-  prefix?: string;
-  suffix?: string;
-};
+  value: Value
+  locales?: Intl.LocalesArgument
+  format?: Format
+  prefix?: string
+  suffix?: string
+}
 
 export default function NumberFlow(props: VoidProps<NumberFlowProps>) {
-  const [_, others] = splitProps(props, ['value', 'locales', 'format', 'prefix', 'suffix']);
+  const [_, others] = splitProps(props, ["value", "locales", "format", "prefix", "suffix"])
 
-  let innerRef: NumberFlowElement | undefined;
-  const group = useNumberFlowGroupContext();
+  let innerRef: NumberFlowElement | undefined
+  const group = useNumberFlowGroupContext()
 
-  const localesString = createMemo(() => (props.locales ? JSON.stringify(props.locales) : ''));
-  const formatString = createMemo(() => (props.format ? JSON.stringify(props.format) : ''));
+  const localesString = createMemo(() => (props.locales ? JSON.stringify(props.locales) : ""))
+  const formatString = createMemo(() => (props.format ? JSON.stringify(props.format) : ""))
   const data = createMemo(() => {
     const formatter = (formatters[`${localesString()}:${formatString()}`] ??= new Intl.NumberFormat(
       props.locales,
-      props.format,
-    ));
+      props.format
+    ))
 
-    return formatToData(props.value, formatter, props.prefix, props.suffix);
-  });
+    return formatToData(props.value, formatter, props.prefix, props.suffix)
+  })
 
-  return <NumberFlowImpl {...others} group={group} data={data} innerRef={innerRef} />;
+  return <NumberFlowImpl {...others} group={group} data={data} innerRef={innerRef} />
 }
 
 // ===========================================================================
@@ -216,55 +217,55 @@ export default function NumberFlow(props: VoidProps<NumberFlowProps>) {
 // ===========================================================================
 
 type GroupContext = {
-  useRegister: (ref: NumberFlowElement) => void;
-  willUpdate: () => void;
-  didUpdate: () => void;
-};
+  useRegister: (ref: NumberFlowElement) => void
+  willUpdate: () => void
+  didUpdate: () => void
+}
 
-const NumberFlowGroupContext = createContext<Accessor<GroupContext | undefined>>(() => undefined);
+const NumberFlowGroupContext = createContext<Accessor<GroupContext | undefined>>(() => undefined)
 
-const useNumberFlowGroupContext = () => useContext(NumberFlowGroupContext);
+const useNumberFlowGroupContext = () => useContext(NumberFlowGroupContext)
 
 export function NumberFlowGroup(props: FlowProps) {
-  let flows = new Set<NumberFlowElement | undefined>();
-  let updating = false;
-  let pending = new WeakMap<NumberFlowElement, boolean>();
+  const flows = new Set<NumberFlowElement | undefined>()
+  let updating = false
+  const pending = new WeakMap<NumberFlowElement, boolean>()
 
   const value = createMemo<GroupContext>(() => ({
     useRegister(ref) {
       onMount(() => {
-        flows.add(ref);
+        flows.add(ref)
         onCleanup(() => {
-          flows.delete(ref);
-        });
-      });
+          flows.delete(ref)
+        })
+      })
     },
     willUpdate() {
-      if (updating) return;
-      updating = true;
+      if (updating) return
+      updating = true
       flows.forEach((ref) => {
-        const f = ref;
-        if (!f || !f.created) return;
-        f.willUpdate();
-        pending.set(f, true);
-      });
+        const f = ref
+        if (!f || !f.created) return
+        f.willUpdate()
+        pending.set(f, true)
+      })
     },
     didUpdate() {
       flows.forEach((ref) => {
-        const f = ref;
-        if (!f || !pending.get(f)) return;
-        f.didUpdate();
-        pending.delete(f);
-      });
-      updating = false;
+        const f = ref
+        if (!f || !pending.get(f)) return
+        f.didUpdate()
+        pending.delete(f)
+      })
+      updating = false
     },
-  }));
+  }))
 
   return (
     <NumberFlowGroupContext.Provider value={value}>
       {props.children}
     </NumberFlowGroupContext.Provider>
-  );
+  )
 }
 
 // ===========================================================================
@@ -274,46 +275,46 @@ export function NumberFlowGroup(props: FlowProps) {
 import {
   canAnimate as _canAnimate,
   prefersReducedMotion as _prefersReducedMotion,
-} from 'number-flow';
+} from "number-flow"
 
 function usePrefersReducedMotion() {
-  const [prefersReducedMotion, set] = createSignal(false);
+  const [prefersReducedMotion, set] = createSignal(false)
 
   onMount(() => {
-    set(_prefersReducedMotion?.matches ?? false);
+    set(_prefersReducedMotion?.matches ?? false)
 
     const onChange = ({ matches }: MediaQueryListEvent) => {
-      set(matches);
-    };
-    _prefersReducedMotion?.addEventListener('change', onChange);
+      set(matches)
+    }
+    _prefersReducedMotion?.addEventListener("change", onChange)
 
     onCleanup(() => {
-      _prefersReducedMotion?.removeEventListener('change', onChange);
-    });
-  });
+      _prefersReducedMotion?.removeEventListener("change", onChange)
+    })
+  })
 
-  return prefersReducedMotion;
+  return prefersReducedMotion
 }
 
 /** Untested, but based on the implementation in https://github.com/barvian/number-flow/blob/main/packages/svelte/src/lib/index.ts. */
 export function useCanAnimate(
-  props: { respectMotionPreference: boolean } = { respectMotionPreference: true },
+  props: { respectMotionPreference: boolean } = { respectMotionPreference: true }
 ) {
-  const [canAnimate, setCanAnimate] = createSignal(_canAnimate);
+  const [canAnimate, setCanAnimate] = createSignal(_canAnimate)
 
   onMount(() => {
-    setCanAnimate(_canAnimate);
-  });
+    setCanAnimate(_canAnimate)
+  })
 
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   const canAnimateWithPreference = createMemo(() => {
-    canAnimate() && !prefersReducedMotion();
-  });
+    canAnimate() && !prefersReducedMotion()
+  })
 
   const finalCanAnimate = createMemo(() => {
-    return props.respectMotionPreference ? canAnimateWithPreference() : canAnimate();
-  });
+    return props.respectMotionPreference ? canAnimateWithPreference() : canAnimate()
+  })
 
-  return finalCanAnimate;
+  return finalCanAnimate
 }

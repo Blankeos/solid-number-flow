@@ -1,4 +1,4 @@
-import { JSX, VoidProps } from 'solid-js';
+import type { JSX, VoidProps } from "solid-js"
 
 export function IconShuffle(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>) {
   return (
@@ -10,5 +10,5 @@ export function IconShuffle(props: VoidProps<JSX.HTMLAttributes<SVGSVGElement>>)
         fill="currentColor"
       />
     </svg>
-  );
+  )
 }
