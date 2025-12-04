@@ -109,6 +109,6 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {},
   "dependencies": {
-    "number-flow": "0.5.3"
+    "number-flow": "0.5.8"
   }
 }

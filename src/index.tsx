@@ -1,13 +1,12 @@
-import {
+import NumberFlowLite, {
   type Data,
   define,
   type Format,
   formatToData,
-  NumberFlowLite,
   type Props,
   renderInnerHTML,
   type Value,
-} from "number-flow"
+} from "number-flow/lite"
 import {
   type Accessor,
   createContext,
@@ -24,7 +23,8 @@ import {
 import type { JSX } from "solid-js/jsx-runtime"
 import { Dynamic } from "solid-js/web"
 
-export type { Format, Trend, Value } from "number-flow"
+export type { Format, NumberPartType, Trend, Value } from "number-flow/lite"
+export * from "number-flow/plugins"
 
 // Can't wait to not have to do this in React 19:
 const OBSERVED_ATTRIBUTES = ["data", "digits"] as const
@@ -72,7 +72,7 @@ function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
   const updateProperties = (prevProps?: NumberFlowImplProps_NoSignals) => {
     if (!el) return
 
-    // // el.manual = !props.isolate; (Not sure why but this breaks the animations, so isolate might not work right now. I personally think it has a very niche usecase though).
+    // el.batched = !props.isolate (Not sure why but this breaks the animations, so isolate might not work right now. I personally think it has a very niche usecase though).
     if (props.transformTiming)
       el.transformTiming ?? NumberFlowElement.defaultProps["transformTiming"]
     if (props.spinTiming) el.spinTiming ?? NumberFlowElement.defaultProps["spinTiming"]
@@ -268,14 +268,10 @@ export function NumberFlowGroup(props: FlowProps) {
   )
 }
 
-// ===========================================================================
-// src/index.tsx
-// ===========================================================================
-
 import {
   canAnimate as _canAnimate,
   prefersReducedMotion as _prefersReducedMotion,
-} from "number-flow"
+} from "number-flow/lite"
 
 function usePrefersReducedMotion() {
   const [prefersReducedMotion, set] = createSignal(false)
