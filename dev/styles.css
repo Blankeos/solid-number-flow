@@ -44,69 +44,14 @@ code {
 /** Theming */
 @layer base {
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.27 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.27 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.27 0 0);
-    --primary: oklch(62.3% 0.214 259.815);
-    --primary-foreground: white;
-    --secondary: oklch(0.97 0 264.54);
-    --secondary-foreground: oklch(0.45 0.03 256.8);
-    --muted: oklch(0.98 0 247.84);
-    --muted-foreground: oklch(0.55 0.02 264.36);
-    --accent: oklch(95% 0.05 259.815);
-    --accent-foreground: var(--primary);
-    --destructive: oklch(0.64 0.21 25.33);
-    --destructive-foreground: oklch(1 0 0);
-    --border: oklch(0.93 0.01 264.53);
-    --input: oklch(0.93 0.01 264.53);
-    --ring: var(--primary);
-    --chart-1: oklch(0.77 0.16 70.08);
-    --chart-2: oklch(0.67 0.16 58.32);
-    --chart-3: oklch(0.56 0.15 49);
-    --chart-4: oklch(0.47 0.12 46.2);
-    --chart-5: oklch(0.41 0.11 45.9);
-    --radius: 0.625rem;
-    --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
-    --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
-    --shadow-sm: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
-    --shadow: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
-    --shadow-md: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
-    --shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
-    --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
-
-    /* The foregrounds suck for me. */
-    --success: oklch(65% 0.15 160);
-    --success-foreground: oklch(0.2 0.05 160);
-    --warning: oklch(85% 0.15 85);
-    --warning-foreground: #a16207;
-    --error: oklch(65% 0.18 25);
-    --error-foreground: oklch(1 0 0);
-    --info: oklch(0.665 0.127 251);
-    --info-foreground: oklch(1 0 0);
-
-    /* Sidebars */
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-  }
-
-  .dark {
     --background: oklch(0.2 0 0);
     --foreground: oklch(0.92 0 0);
     --card: oklch(0.27 0 0);
     --card-foreground: oklch(0.92 0 0);
     --popover: oklch(0.27 0 0);
     --popover-foreground: oklch(0.92 0 0);
-    --primary: oklch(62.3% 0.214 259.815);
+    /*--primary: oklch(62.3% 0.214 259.815);*/
+    --primary: white;
     --primary-foreground: white;
     --secondary: oklch(0.27 0 0);
     --secondary-foreground: oklch(0.92 0 0);
@@ -125,7 +70,7 @@ code {
     --chart-4: oklch(0.56 0.15 49);
     --chart-5: oklch(0.47 0.12 46.2);
 
-    --font-sans: Inter, sans-serif;
+    --font-sans: Geist, sans-serif;
     --font-serif: Source Serif 4, serif;
     --font-mono: JetBrains Mono, monospace;
     --radius: 0.625rem;
@@ -147,11 +92,20 @@ code {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.439 0 0);
+
+    /* The foregrounds suck for me. */
+    --success: oklch(65% 0.15 160);
+    --success-foreground: oklch(0.2 0.05 160);
+    --warning: oklch(85% 0.15 85);
+    --warning-foreground: #a16207;
+    --error: oklch(65% 0.18 25);
+    --error-foreground: oklch(1 0 0);
+    --info: oklch(0.665 0.127 251);
+    --info-foreground: oklch(1 0 0);
   }
 }
 
 @theme {
-  --font-manrope: "Manrope", "sans-serif";
   --default-border-width: 0.5px;
   /* --font-sans: Inter, sans-serif; */
   /* --font-serif: Source Serif 4, serif; */
@@ -236,6 +190,8 @@ code {
 
   --animate-accordion-down: accordion-down 200ms ease-out forwards;
   --animate-accordion-up: accordion-up 200ms ease-in-out forwards;
+
+  --animate-scale-in: scale-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 
   @keyframes accordion-down {
     from {
@@ -358,6 +314,17 @@ code {
     to {
       opacity: 0;
       transform: translate(15px, 0px);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 }

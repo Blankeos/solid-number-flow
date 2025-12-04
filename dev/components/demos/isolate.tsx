@@ -1,5 +1,4 @@
 import Demo, { DemoSwitch, type DemoProps } from "dev/components/demos/base-demo"
-import { MDXContent } from "dev/components/mdx-content"
 import { createSignal } from "solid-js"
 import NumberFlow from "src"
 
@@ -20,7 +19,7 @@ export default function IsolateDemo(props: Omit<DemoProps, "children" | "code">)
   return (
     <Demo
       {...props}
-      code={<MDXContent code={code} />}
+      code={code}
       title={
         <DemoSwitch checked={isolate()} onChange={setIsolate}>
           <code class="font-semibold">isolate</code>
@@ -29,7 +28,7 @@ export default function IsolateDemo(props: Omit<DemoProps, "children" | "code">)
       onClick={() => setIncreased((o) => !o)}
     >
       <div class="~text-3xl/4xl flex items-center gap-4">
-        {increased() && <div class="bg-zinc-200 dark:bg-zinc-800 ~w-20/40 h-[1em] rounded-sm" />}
+        {increased() && <div class="bg-zinc-800 ~w-20/40 h-[1em] rounded-sm" />}
         <NumberFlow
           locales="en-US"
           isolate={isolate()}

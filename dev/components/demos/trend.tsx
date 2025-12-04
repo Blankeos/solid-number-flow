@@ -6,7 +6,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "dev/components/ui/dropdown-menu"
-import { MDXContent } from "dev/components/mdx-content"
 import { useCycle } from "dev/hooks/use-cycle"
 import type { Trend } from "number-flow"
 import { createSignal, For } from "solid-js"
@@ -38,10 +37,10 @@ export default function TrendDemo(props: Omit<DemoProps, "children" | "code">) {
   return (
     <Demo
       {...props}
-      code={<MDXContent code={code} />}
+      code={code}
       title={
         <DropdownMenu>
-          <DropdownMenuTrigger class="flex items-center gap-1 rounded-md px-2 py-1 text-xs hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors outline-none">
+          <DropdownMenuTrigger class="flex items-center gap-1 rounded-md px-2 py-1 text-xs hover:bg-zinc-800 transition-colors outline-none">
             <code class="text-muted text-zinc-500">trend:</code>
             <code class="font-semibold">{option()}</code>
             <svg
@@ -58,7 +57,10 @@ export default function TrendDemo(props: Omit<DemoProps, "children" | "code">) {
             </svg>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuRadioGroup value={option()} onChange={(v) => setOption(v as keyof typeof TRENDS)}>
+            <DropdownMenuRadioGroup
+              value={option()}
+              onChange={(v) => setOption(v as keyof typeof TRENDS)}
+            >
               <For each={Object.keys(TRENDS)}>
                 {(key) => (
                   <DropdownMenuRadioItem value={key}>

@@ -1,5 +1,4 @@
 import Demo, { DemoSwitch, type DemoProps } from "dev/components/demos/base-demo"
-import { MDXContent } from "dev/components/mdx-content"
 import { createSignal } from "solid-js"
 import NumberFlow from "src"
 
@@ -21,7 +20,7 @@ export default function TabularNumsDemo(props: Omit<DemoProps, "children" | "cod
   return (
     <Demo
       {...props}
-      code={<MDXContent code={code} />}
+      code={code}
       title={
         <DemoSwitch checked={tabularNums()} onChange={setTabularNums}>
           <code class="font-semibold">tabular-nums</code>

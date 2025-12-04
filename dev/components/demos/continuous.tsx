@@ -1,5 +1,4 @@
 import Demo, { type DemoProps, DemoSwitch } from "dev/components/demos/base-demo"
-import { MDXContent } from "dev/components/mdx-content"
 import { useCycle } from "dev/hooks/use-cycle"
 import { continuous } from "number-flow/plugins"
 import { createSignal } from "solid-js"
@@ -13,7 +12,7 @@ export default function ContinuousDemo(props: Omit<DemoProps, "children" | "code
 
   const code = `
 \`\`\`tsx
-import NumberFlow, { continuous } from '@number-flow/solid'
+import NumberFlow, { continuous } from 'solid-number-flow'
 
 <NumberFlow
   plugins={[continuous]}
@@ -25,7 +24,7 @@ import NumberFlow, { continuous } from '@number-flow/solid'
   return (
     <Demo
       {...props}
-      code={<MDXContent code={code} />}
+      code={code}
       title={
         <DemoSwitch checked={isContinuous()} onChange={setContinuous}>
           <code class="font-semibold">continuous</code>

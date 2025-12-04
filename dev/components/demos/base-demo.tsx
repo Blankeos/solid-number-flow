@@ -1,5 +1,6 @@
 // Tabs
 import { Tabs } from "@kobalte/core/tabs"
+import { useClipboard } from "bagon-hooks"
 import { clsx } from "clsx"
 import {
   type ComponentProps,
@@ -8,9 +9,13 @@ import {
   type FlowProps,
   type JSX,
   mergeProps,
+  onCleanup,
+  onMount,
   Show,
   splitProps,
 } from "solid-js"
+import { cn } from "@/utils/cn"
+import { MDXContent } from "dev/components/mdx-content"
 
 // TODO: Dropdown (use @kobalte)
 // Dropdown
@@ -43,7 +48,7 @@ export type DemoProps = {
   children: JSX.Element
   class?: string
   defaultValue?: TabValue
-  code?: JSX.Element
+  code?: string
   minHeight?: string
   title?: JSX.Element
 }
@@ -63,6 +68,8 @@ function Demo(props: FlowProps<Props>) {
 
   const [knowsToClick, setKnowsToClick] = createSignal(false)
   const [active, setActive] = createSignal(_props.defaultValue)
+
+  const { copy, copied } = useClipboard()
 
   function handleClick() {
     if (!_props.onClick) return
@@ -87,25 +94,25 @@ function Demo(props: FlowProps<Props>) {
   return (
     <Tabs
       ref={_props.ref}
-      class={clsx(active() === "code" && "dark", "Demo not-prose relative isolate text-primary")} // reset text color if inside prose
+      class={clsx("Demo not-prose relative flex flex-col text-primary")} // reset text color if inside prose
       value={active()}
       onChange={(val) => setActive(val as TabValue)}
       // onValueChange={(val) => setActive(val as TabValue)}
     >
       <Show when={_props.code}>
         {/* <MotionConfig transition={{ layout: { type: 'spring', duration: 0.25, bounce: 0 } }}> */}
-        <Tabs.List class="absolute top-3 right-3 z-10 flex gap-1 rounded-full bg-zinc-150/90 p-1 backdrop-blur-lg dark:bg-black/60">
+        <Tabs.List class="absolute top-3 right-3 z-10 flex gap-1 rounded-full bg-black/60 p-1 backdrop-blur-lg">
           <Tabs.Trigger
             value="preview"
             class={clsx(
               active() !== "preview" && "hover:transition-[color]",
-              "relative px-2 py-1 font-medium text-xs/4 text-zinc-600 hover:text-primary aria-selected:text-primary dark:text-muted"
+              "relative px-2 py-1 font-medium text-muted text-xs/4 hover:text-primary aria-selected:text-primary"
             )}
           >
             <Show when={active() === "preview"}>
               {/* // Motion.div */}
               <div
-                class="prefers-dark:!bg-white/15 -z-10 absolute inset-0 size-full bg-white shadow-sm dark:bg-white/25"
+                class="-z-10 absolute inset-0 size-full rounded-full bg-white/25 shadow-sm"
                 style={{ "border-radius": "999" }}
                 // layout
                 // layoutId={`${id}active`}
@@ -117,13 +124,13 @@ function Demo(props: FlowProps<Props>) {
             value="code"
             class={clsx(
               active() !== "code" && "hover:transition-[color]",
-              "relative px-2 py-1 font-medium text-xs/4 text-zinc-600 hover:text-primary aria-selected:text-primary dark:text-muted"
+              "relative px-2 py-1 font-medium text-muted text-xs/4 hover:text-primary aria-selected:text-primary"
             )}
           >
             <Show when={active() === "code"}>
               {/* // Motion.div */}
               <div
-                class="prefers-dark:!bg-white/15 -z-10 absolute inset-0 size-full bg-white shadow-sm dark:bg-white/25"
+                class="-z-10 absolute inset-0 size-full rounded-full bg-white/25 shadow-sm"
                 style={{ "border-radius": "999" }}
                 // layout
                 // layoutId={`${id}active`}
@@ -134,43 +141,86 @@ function Demo(props: FlowProps<Props>) {
         </Tabs.List>
         {/* </MotionConfig> */}
       </Show>
-      <Tabs.Content
-        value="preview"
-        class={clsx(
-          _props.class,
-          "relative rounded-lg border border-faint data-[state=inactive]:hidden"
-        )}
+      <Collapsible
+        open={true}
+        containerClass={cn("rounded-lg border border-faint", active() === "code" && "bg-[#18181B]")}
       >
-        <Show when={renderedTitle()}>
-          <div class="absolute top-3 left-3">{renderedTitle()}</div>
-        </Show>
+        <Show when={active() === "preview"}>
+          <Tabs.Content value="preview" class={clsx(_props.class, "relative")}>
+            <Show when={renderedTitle()}>
+              <div class="absolute top-3 left-3">{renderedTitle()}</div>
+            </Show>
 
-        <div
-          class={clsx(_props.minHeight, "flex flex-col items-center justify-center p-5 pb-6")}
-          onClick={handleClick}
-          onMouseDown={handleMouseDown}
-        >
-          {_props.children}
-          {_props?.onClick && (
-            <span
-              class={clsx(
-                "absolute bottom-5 left-0 w-full text-center text-sm text-zinc-400 transition-opacity duration-200 ease-out",
-                knowsToClick() && "opacity-0"
-              )}
+            <div
+              class={clsx(_props.minHeight, "flex flex-col items-center justify-center p-5 pb-6")}
+              onClick={handleClick}
+              onMouseDown={handleMouseDown}
             >
-              Click anywhere to change numbers
-            </span>
-          )}
-        </div>
-      </Tabs.Content>
-      <Show when={_props.code}>
-        <Tabs.Content
-          value="code"
-          class="relative overflow-hidden rounded-lg border border-faint bg-zinc-950 text-sm"
-        >
-          {_props.code}
-        </Tabs.Content>
-      </Show>
+              {_props.children}
+              {_props?.onClick && (
+                <span
+                  class={clsx(
+                    "absolute bottom-5 left-0 w-full text-center text-sm text-zinc-400 transition-opacity duration-200 ease-out",
+                    knowsToClick() && "opacity-0"
+                  )}
+                >
+                  Click anywhere to change numbers
+                </span>
+              )}
+            </div>
+          </Tabs.Content>
+        </Show>
+        <Show when={active() === "code" && _props.code}>
+          <Tabs.Content value="code" class="relative overflow-hidden p-3 text-sm">
+            <MDXContent code={_props.code!} />
+            <button
+              onClick={() => {
+                const code = _props.code || ""
+                const trimmedCode = code
+                  .replace(/^\s*```tsx\s*\n?/, "") // Remove ```tsx from beginning
+                  .replace(/\n?\s*```\s*$/, "") // Remove ``` from end
+                copy(trimmedCode)
+              }}
+              class="absolute right-2 bottom-2 animate-fadeIn rounded-md bg-white/10 p-1 transition-colors hover:bg-white/20"
+            >
+              <Show
+                when={!copied()}
+                fallback={
+                  <svg
+                    class="h-4 w-4 animate-scale-in text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                }
+              >
+                <svg
+                  class="h-4 w-4 animate-scale-in text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </Show>
+            </button>
+          </Tabs.Content>
+        </Show>
+      </Collapsible>
     </Tabs>
   )
 }
@@ -254,12 +304,125 @@ export function DemoSwitch(props: ComponentProps<typeof Switch>) {
       <Switch.Control
         class={clsx(
           props.class,
-          "group relative flex h-6 w-11 cursor-pointer rounded-full bg-zinc-200 p-0.5 transition-colors duration-200 ease-in-out focus:outline-none data-checked:bg-zinc-950 data-focus:outline-2 data-focus:outline-blue-500 dark:bg-zinc-800 dark:data-checked:bg-zinc-50"
+          "group relative flex h-6 w-11 cursor-pointer rounded-full bg-zinc-800 p-0.5 transition-colors duration-200 ease-in-out focus:outline-none data-checked:bg-zinc-50 data-focus:outline-2 data-focus:outline-blue-500"
         )}
       >
-        <Switch.Thumb class="spring-bounce-0 spring-duration-200 pointer-events-none inline-block size-5 rounded-full bg-white shadow-lg ring-0 transition-transform group-data-checked:translate-x-5 dark:bg-zinc-950" />
+        <Switch.Thumb class="spring-bounce-0 spring-duration-200 pointer-events-none inline-block size-5 rounded-full bg-zinc-950 shadow-lg ring-0 transition-transform group-data-checked:translate-x-5" />
       </Switch.Control>
       <Switch.Label class="text-xs">{props.children as any}</Switch.Label>
     </Switch>
+  )
+}
+
+// NOT A SOLID-UI / SHADCN COMPONENT. CUSTOM BY CARLO
+// A11Y NOTES ----------------------------------------------------
+// - The extra divs here (outer animating wrapper + inner measure div)
+//   are **not** exposed to the a11y tree because:
+//     – we don't add any semantic roles
+//     – we don't add any labelling attributes
+//   So screen-readers will only “see” the real interactive controls
+//   that compose this component (buttons, links, inputs, etc.).
+//   Multiple layout divs are therefore “noise-free”.
+// - The collapsing action itself should be announced by whatever
+//   trigger toggles the `open` prop (e.g. the parent button should
+//   have `aria-expanded` and `aria-controls`).
+// - If this component is ever used as a disclosure region directly,
+//   add `id`, `role="region"` and `aria-labelledby` (or `aria-label`)
+//   on the outer div so assistive tech can associate it with the
+//   controlling button.
+// - `overflow:hidden` on the outer div prevents keyboard focus from
+//   landing on off-screen descendants when closed, but double-check
+//   that no forced-focus logic circumvents that.
+// - Prefer `prefers-reduced-motion` in consumer code to disable
+//   the `transition-all` class when the user has requested it.
+// - HIDING CONTENT FROM SR WHEN CLOSED:  Yes, this is the usual,
+//   expected pattern.  When a disclosure widget is closed we remove
+//   its descendants from the a11y tree with `aria-hidden` so users
+//   cannot read/traverse it.  (aria-expanded=false already implies
+//   invisibility for SR users; aria-hidden just makes it official.)
+//   When open we drop aria-hidden so the region is discoverable again.
+// - External trigger a11y docs - added.
+// ----------------------------------------------------------------
+
+export interface CollapsibleProps extends JSX.HTMLAttributes<HTMLDivElement> {
+  open?: boolean
+  /**
+   * Applied to the collapsing wrapper div (the element whose height changes). Generally no need to touch this besides changing the transition duration.
+   */
+  containerClass?: string
+  /**
+   * Applied to the content div (the measured inner wrapper)
+   */
+  class?: string
+  children: JSX.Element
+}
+
+/*
+ * Fluid height collapsible built on native resize events.
+ * Uses transition-* utilities (duration/ease) – the root parent gets
+ * a changing style.height that the utility class animates.
+ * Works exactly like an Accordion panel but without any trigger
+ * baggage; state is 100% parent-controlled via open={bool}.
+ *
+ * A11y Notes for external triggers (Just a minor trade-off from not using an Accordion component).
+ * If an external button/link controls this panel you should:
+ *   1. Pass a unique `id` to Collapsible (e.g. id="faq-panel-3").
+ *   2. On the trigger element, add:
+ *        aria-expanded={open}
+ *        aria-controls="faq-panel-3"
+ *      where `open` is the same boolean you pass to Collapsible.
+ *   3. Optionally set the `role="region"` prop on Collapsible so
+ *      screen-reader users hear "region" when entering the panel.
+ *   4. If you want a visible label, add `aria-labelledby`
+ *      to the trigger button (not Collapsible) pointing
+ *      to the ID of the heading that names the panel.
+ *      Example:
+ *        <h3 id="faq-title">Shipping options</h3>
+ *        <button aria-expanded={open} aria-controls="faq-panel-3" aria-labelledby="faq-title">
+ *          …
+ *        </button>
+ */
+export function Collapsible(props: CollapsibleProps) {
+  let innerRef: HTMLDivElement | undefined
+  let lastHeight = 0
+
+  const [local, others] = splitProps(props, ["open", "containerClass", "class", "children"])
+  const [height, setHeight] = createSignal<number | string>("auto")
+
+  // Observe the *inner* element’s size so any content change is reflected
+  const resizeHandler = () => {
+    if (innerRef) {
+      lastHeight = innerRef.scrollHeight
+      setHeight(lastHeight) // keep latest value when open
+    }
+  }
+
+  let ro: ResizeObserver
+  onMount(() => {
+    if (!innerRef) return
+    ro = new ResizeObserver(resizeHandler)
+    ro.observe(innerRef)
+    resizeHandler() // ensure initial read
+  })
+
+  onCleanup(() => ro?.disconnect())
+
+  // Select what to render based on open state
+  // (invoke children here once so ResizeObserver sees static children of inner)
+  const content = children(() => local.children)
+
+  const heightStyle = () => (local.open ? `${height()}px` : "0px")
+  return (
+    <div
+      style={{ height: heightStyle() }}
+      class={cn("overflow-hidden transition-[width,height] duration-400", local.containerClass)}
+      aria-hidden={!local.open}
+      {...others}
+    >
+      {/* inner wrapper we measure */}
+      <div ref={innerRef} class={cn(local.class, "w-full")}>
+        {content()}
+      </div>
+    </div>
   )
 }

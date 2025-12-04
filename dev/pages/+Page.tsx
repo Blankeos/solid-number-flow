@@ -64,7 +64,7 @@ export default function HomePage() {
     cycleFormat()
   }
   return (
-    <div class="min-h-screen bg-zinc-950 font-sans text-white">
+    <div class="min-h-screen bg-zinc-950 text-white">
       <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 py-20">
         <div class="container inline-flex items-center justify-center whitespace-nowrap text-center">
           <h1 class="font-medium">
@@ -111,7 +111,7 @@ export default function HomePage() {
           </a>
         </div>
 
-        <p class="~text-base/lg prose prose-muted dark:prose-invert mt-4 max-w-md text-balance text-center text-zinc-400">
+        <p class="~text-base/lg prose prose-muted prose-invert mt-4 max-w-md text-balance text-center text-zinc-400">
           An animated number component for Solid. Dependency-free. Accessible. Customizable.
         </p>
 

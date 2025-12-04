@@ -1,5 +1,4 @@
 import Demo, { type DemoProps } from "dev/components/demos/base-demo"
-import { MDXContent } from "dev/components/mdx-content"
 import { useCycle } from "dev/hooks/use-cycle"
 import NumberFlow, { type Value } from "src"
 
@@ -19,7 +18,7 @@ export default function SuffixDemo(props: Omit<DemoProps, "children" | "code">) 
 `
 
   return (
-    <Demo {...props} code={<MDXContent code={code} />} onClick={cycleValue}>
+    <Demo {...props} code={code} onClick={cycleValue}>
       <NumberFlow
         locales="en-US"
         value={value()}
