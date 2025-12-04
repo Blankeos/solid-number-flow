@@ -120,7 +120,7 @@ function Demo(props: FlowProps<Props>) {
               "relative px-2 py-1 font-medium text-xs/4 text-zinc-600 hover:text-primary aria-selected:text-primary dark:text-muted"
             )}
           >
-            <Show when={active() === _props.code}>
+            <Show when={active() === "code"}>
               {/* // Motion.div */}
               <div
                 class="prefers-dark:!bg-white/15 -z-10 absolute inset-0 size-full bg-white shadow-sm dark:bg-white/25"
@@ -164,7 +164,12 @@ function Demo(props: FlowProps<Props>) {
         </div>
       </Tabs.Content>
       <Show when={_props.code}>
-        <Tabs.Content value="code">{_props?.code}</Tabs.Content>«
+        <Tabs.Content
+          value="code"
+          class="relative overflow-hidden rounded-lg border border-faint bg-zinc-950 text-sm"
+        >
+          {_props.code}
+        </Tabs.Content>
       </Show>
     </Tabs>
   )
@@ -196,7 +201,7 @@ export function DemoTitle(props: JSX.IntrinsicElements["span"] & { children: str
 // 			{...props}
 // 			class={clsx(
 // 				class,
-// 				'group flex h-8 items-center rounded-full px-3 text-xs shadow-sm ring ring-black/[8%] dark:shadow-none dark:ring-white/10'
+// 				'group flex h-8 items-center rounded-full px-3 text-xs shadow-sm ring ring-black/8 dark:shadow-none dark:ring-white/10'
 // 			)}
 // 		>
 // 			{children}
@@ -214,7 +219,7 @@ export function DemoTitle(props: JSX.IntrinsicElements["span"] & { children: str
 // 			{...props}
 // 			class={clsx(
 // 				class,
-// 				'animate-pop-in dark:ring-white/12.5 absolute left-0 top-full mt-2 min-w-full origin-top-left rounded-xl bg-white/90 p-1.5 shadow-sm ring ring-inset ring-black/[8%] backdrop-blur-xl backdrop-saturate-[140%] dark:bg-zinc-950/90 dark:shadow-none'
+// 				'animate-pop-in dark:ring-white/12.5 absolute left-0 top-full mt-2 min-w-full origin-top-left rounded-xl bg-white/90 p-1.5 shadow-sm ring ring-inset ring-black/8 backdrop-blur-xl backdrop-saturate-140 dark:bg-zinc-950/90 dark:shadow-none'
 // 			)}
 // 		/>
 // 	)
@@ -232,7 +237,7 @@ export function DemoTitle(props: JSX.IntrinsicElements["span"] & { children: str
 // 			class={clsx(
 // 				class,
 // 				props.disabled ? 'pr-2' : 'pr-4',
-// 				'dark:data-[focus]:bg-white/12.5 flex w-full items-center gap-2 rounded-lg py-2 pl-2 text-xs font-medium data-[disabled]:cursor-default data-[focus]:bg-black/5'
+// 				'dark:data-focus:bg-white/12.5 flex w-full items-center gap-2 rounded-lg py-2 pl-2 text-xs font-medium data-disabled:cursor-default data-focus:bg-black/5'
 // 			)}
 // 		>
 // 			{children}
@@ -249,10 +254,10 @@ export function DemoSwitch(props: ComponentProps<typeof Switch>) {
       <Switch.Control
         class={clsx(
           props.class,
-          "group relative flex h-6 w-11 cursor-pointer rounded-full bg-zinc-200 p-0.5 transition-colors duration-200 ease-in-out focus:outline-none data-[checked]:bg-zinc-950 data-[focus]:outline-2 data-[focus]:outline-blue-500 dark:bg-zinc-800 dark:data-[checked]:bg-zinc-50"
+          "group relative flex h-6 w-11 cursor-pointer rounded-full bg-zinc-200 p-0.5 transition-colors duration-200 ease-in-out focus:outline-none data-checked:bg-zinc-950 data-focus:outline-2 data-focus:outline-blue-500 dark:bg-zinc-800 dark:data-checked:bg-zinc-50"
         )}
       >
-        <Switch.Thumb class="spring-bounce-0 spring-duration-200 pointer-events-none inline-block size-5 rounded-full bg-white shadow-lg ring-0 transition-transform group-data-[checked]:translate-x-5 dark:bg-zinc-950" />
+        <Switch.Thumb class="spring-bounce-0 spring-duration-200 pointer-events-none inline-block size-5 rounded-full bg-white shadow-lg ring-0 transition-transform group-data-checked:translate-x-5 dark:bg-zinc-950" />
       </Switch.Control>
       <Switch.Label class="text-xs">{props.children as any}</Switch.Label>
     </Switch>

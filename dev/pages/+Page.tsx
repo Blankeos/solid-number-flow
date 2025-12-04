@@ -1,4 +1,9 @@
 import ContinuousDemo from "dev/components/demos/continuous"
+import IsolateDemo from "dev/components/demos/isolate"
+import StylingDemo from "dev/components/demos/styling"
+import SuffixDemo from "dev/components/demos/suffix"
+import TabularNumsDemo from "dev/components/demos/tabular-nums"
+import TimingsDemo from "dev/components/demos/timings"
 import TrendDemo from "dev/components/demos/trend"
 import { useCycle } from "dev/hooks/use-cycle"
 import type { Format } from "number-flow"
@@ -7,11 +12,6 @@ import pkgJSON from "src/../package.json"
 import { IconGithub } from "../icons/github"
 import { IconShuffle } from "../icons/shuffle"
 import { IconSolidJS } from "../icons/solidjs"
-import { Markdown } from "../markdown"
-// @ts-expect-error idk what type I need to override.
-import NPMInstall from "../markdown/npm-install.md"
-// @ts-expect-error idk what type I need to override.
-import Usage from "../markdown/usage.md"
 
 const NUMBERS = [321, -3243.6, 42, 398.43, -3243.5, 1435237.2, 12348.43, -3243.6, 54323.2]
 const LOCALES = ["fr-FR", "en-US", "fr-FR", "en-US", "en-US", "zh-CN", "en-US", "en-US", "fr-FR"]
@@ -64,23 +64,37 @@ export default function HomePage() {
     cycleFormat()
   }
   return (
-    <div class="min-h-screen bg-zinc-950 text-white">
+    <div class="min-h-screen bg-zinc-950 font-sans text-white">
       <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-y-5 px-8 py-20">
-        <span class="flex items-center gap-x-1.5 text-base">
-          <IconSolidJS class="h-6 w-6" /> NumberFlow{" "}
-          <span class="text-sm text-zinc-400">v{pkgJSON.version}</span>
-        </span>
+        <div class="container inline-flex items-center justify-center whitespace-nowrap text-center">
+          <h1 class="font-medium">
+            <a class="group/link font-medium" href="/">
+              NumberFlow
+            </a>
+          </h1>
+          &nbsp;<span class="text-muted text-zinc-500">for</span>&nbsp;
+          <button
+            class="btn-secondary group inline-flex items-center gap-1 rounded-lg bg-zinc-900 px-2 py-1 pr-1.5 font-medium text-primary transition duration-[.16s] ease-out hover:bg-zinc-800"
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded="false"
+          >
+            <IconSolidJS class="size-6" />
+            Solid
+          </button>
+          <span class="ml-2 text-sm text-zinc-400">v{pkgJSON.version}</span>
+        </div>
         <NumberFlow
-          class="text-6xl"
+          class="font-semibold text-6xl"
           isolate={false}
           value={value()}
           locales={locale()}
           format={format()}
         />
 
-        <div class="flex items-center gap-x-3">
+        <div class="mt-4 flex items-center gap-x-3">
           <button
-            class="flex items-center gap-x-2 rounded-full bg-neutral-900 px-6 py-3 transition active:scale-95"
+            class="flex items-center gap-x-2 rounded-full bg-neutral-900 px-6 py-3 transition hover:bg-neutral-800 active:scale-95"
             onClick={cycle}
           >
             <IconShuffle />
@@ -90,50 +104,75 @@ export default function HomePage() {
           <a
             href="https://github.com/blankeos/solid-number-flow"
             target="_blank"
-            class="rounded-full border border-white p-2 transition hover:bg-neutral-50/20 active:scale-95"
+            class="rounded-full border border-zinc-700 p-3 transition hover:bg-zinc-800 active:scale-95"
             rel="noopener"
           >
             <IconGithub class="h-5 w-5" />
           </a>
         </div>
 
-        <p class="max-w-xl text-center text-zinc-300">
-          A Solid component to transition, localize, and format numbers.
-          <br />
-          Dependency-free. Accessible. Customizable.
+        <p class="~text-base/lg prose prose-muted dark:prose-invert mt-4 max-w-md text-balance text-center text-zinc-400">
+          An animated number component for Solid. Dependency-free. Accessible. Customizable.
         </p>
 
-        <p class="text-zinc-400">
+        <p class="text-sm text-zinc-500">
           Ported from{" "}
-          <a
-            href="https://github.com/barvian/number-flow"
-            class="hover:underline"
-            target="_blank"
-            rel="noopener"
-          >
-            barvian/number-flow
+          <a href="https://number-flow.barvian.me" class="underline hover:text-zinc-300">
+            number-flow.barvian.me
           </a>
         </p>
       </div>
 
-      <div class="mx-auto flex w-full max-w-xl flex-col gap-y-5 px-5">
-        <div class="w-full max-w-xl overflow-hidden rounded-md border border-zinc-500 bg-[#121212] p-5 text-sm">
-          <Markdown children={<NPMInstall />} />
-        </div>
+      <div class="mx-auto flex w-full max-w-xl flex-col gap-y-24 px-5 pb-32">
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Continuous</h2>
+          <p class="mb-6 text-zinc-400">
+            The continuous plugin makes the number transitions appear to pass through in-between
+            numbers.
+          </p>
+          <ContinuousDemo />
+        </section>
 
-        <div class="w-full max-w-xl overflow-hidden rounded-md border border-zinc-500 bg-[#121212] p-5 text-sm">
-          <Markdown children={<Usage />} />
-        </div>
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Trend</h2>
+          <p class="mb-6 text-zinc-400">Controls the direction of the digits.</p>
+          <TrendDemo />
+        </section>
+
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Timings</h2>
+          <p class="mb-6 text-zinc-400">
+            Customize animation timings for transforms, spins, and opacity.
+          </p>
+          <TimingsDemo />
+        </section>
+
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Suffix & Prefix</h2>
+          <p class="mb-6 text-zinc-400">Add custom prefix or suffix to the number.</p>
+          <SuffixDemo />
+        </section>
+
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Isolate</h2>
+          <p class="mb-6 text-zinc-400">Isolate transitions from layout changes.</p>
+          <IsolateDemo />
+        </section>
+
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Styling</h2>
+          <p class="mb-6 text-zinc-400">Style specific parts of the component using CSS ::part.</p>
+          <StylingDemo />
+        </section>
+
+        <section>
+          <h2 class="mb-4 font-semibold text-2xl">Tabular Nums</h2>
+          <p class="mb-6 text-zinc-400">
+            Ensure all numbers are the same width to prevent shifting.
+          </p>
+          <TabularNumsDemo />
+        </section>
       </div>
-
-      <div class="h-20" />
-
-      <div class="mx-auto flex w-full max-w-xl flex-col gap-y-10 px-5">
-        <TrendDemo class="" />
-        <ContinuousDemo class="" />
-      </div>
-
-      <div class="h-20" />
     </div>
   )
 }
