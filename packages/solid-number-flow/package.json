@@ -94,5 +94,6 @@
   "typesVersions": {},
   "dependencies": {
     "number-flow": "catalog:"
-  }
+  },
+  "packageManager": "bun@1.3.3"
 }
