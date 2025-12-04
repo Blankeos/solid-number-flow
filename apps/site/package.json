@@ -14,7 +14,6 @@
     "clsx": "^2.1.1",
     "jsdom": "^24.0.0",
     "number-flow": "catalog:",
-    "shiki": "^3.19.0",
     "solid-js": "^1.9.10",
     "solid-jsx": "^1.1.4",
     "solid-number-flow": "workspace:*",

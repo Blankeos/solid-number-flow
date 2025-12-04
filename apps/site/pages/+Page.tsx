@@ -59,8 +59,6 @@ const FORMATS = [
 import { useMetadata } from "vike-metadata-solid"
 import { MDXContent } from "@/components/mdx-content"
 import NpmInstall from "@/markdown/npm-install.md"
-import { SolidMarkdown } from "solid-markdown"
-import rehypeShiki from "@shikijs/rehype"
 
 export default function HomePage() {
   useMetadata({
