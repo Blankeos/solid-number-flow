@@ -3,7 +3,7 @@ import * as TabsPrimitive from "@kobalte/core/tabs"
 import type { ValidComponent } from "solid-js"
 import { splitProps } from "solid-js"
 
-import { cn } from "@/utils/cn"
+import { cn } from "../../utils/cn"
 
 const Tabs = TabsPrimitive.Root
 

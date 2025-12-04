@@ -3,7 +3,7 @@ import type { PolymorphicProps } from "@kobalte/core/polymorphic"
 import type { Component, ComponentProps, JSX, ValidComponent } from "solid-js"
 import { For, splitProps } from "solid-js"
 
-import { cn } from "@/utils/cn"
+import { cn } from "../../utils/cn"
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal

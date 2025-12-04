@@ -1,17 +1,15 @@
-import tailwindcss from "@tailwindcss/vite"
-import vike from "vike/plugin"
+#import tailwindcss from "@tailwindcss/vite"
+#import vike from "vike/plugin"
+#// Vike
+#import vikeSolid from "vike-solid/vite"
+#import { defineConfig } from "vite"
 
-// Vike
-import vikeSolid from "vike-solid/vite"
-import { defineConfig } from "vite"
-import tsConfigPaths from "vite-tsconfig-paths"
-
-export default defineConfig({
-  plugins: [
-    tsConfigPaths({ root: "./" }),
-    vike({
-      prerender: true,
-    }),
+#export default defineConfig({
+#  root: ".",
+#  plugins: [
+#    vike({
+#      prerender: true,
+#    }),
     vikeSolid(),
     tailwindcss(),
   ],

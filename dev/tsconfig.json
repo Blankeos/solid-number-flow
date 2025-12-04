@@ -1,10 +1,10 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["vite/client"],
-    "paths": {
-      "@/*": ["./dev/*"]
-    }
-  },
-  "exclude": ["node_modules", "dist"]
+#    "types": ["vite/client"],
+#    "paths": {
+#      // "@/*": ["./dev/*"]
+#    }
+#  },
+#  "exclude": ["node_modules", "dist"]
 }

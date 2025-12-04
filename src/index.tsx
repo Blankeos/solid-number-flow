@@ -70,6 +70,7 @@ type NumberFlowImplProps_NoSignals = Omit<NumberFlowImplProps, "parts"> & {
 
 function NumberFlowImpl(props: VoidProps<NumberFlowImplProps>) {
   let el: NumberFlowElement | undefined
+  props.group()?.useRegister(() => el)
 
   const updateProperties = (prevProps?: NumberFlowImplProps_NoSignals) => {
     if (!el) return
@@ -249,7 +250,7 @@ export default function NumberFlow(props: VoidProps<NumberFlowProps>) {
 // ===========================================================================
 
 type GroupContext = {
-  useRegister: (ref: NumberFlowElement) => void
+  useRegister: (getEl: () => NumberFlowElement | undefined) => void
   willUpdate: () => void
   didUpdate: () => void
 }
@@ -259,42 +260,40 @@ const NumberFlowGroupContext = createContext<Accessor<GroupContext | undefined>>
 const useNumberFlowGroupContext = () => useContext(NumberFlowGroupContext)
 
 export function NumberFlowGroup(props: FlowProps) {
-  const flows = new Set<NumberFlowElement | undefined>()
+  const flows = new Set<() => NumberFlowElement | undefined>()
   let updating = false
   const pending = new WeakMap<NumberFlowElement, boolean>()
 
-  const value = createMemo<GroupContext>(() => ({
-    useRegister(ref) {
-      onMount(() => {
-        flows.add(ref)
-        onCleanup(() => {
-          flows.delete(ref)
-        })
+  const value: GroupContext = {
+    useRegister(getEl) {
+      flows.add(getEl)
+      onCleanup(() => {
+        flows.delete(getEl)
       })
     },
     willUpdate() {
       if (updating) return
       updating = true
-      flows.forEach((ref) => {
-        const f = ref
+      flows.forEach((getEl) => {
+        const f = getEl()
         if (!f || !f.created) return
         f.willUpdate()
         pending.set(f, true)
       })
     },
     didUpdate() {
-      flows.forEach((ref) => {
-        const f = ref
+      flows.forEach((getEl) => {
+        const f = getEl()
         if (!f || !pending.get(f)) return
         f.didUpdate()
         pending.delete(f)
       })
       updating = false
     },
-  }))
+  }
 
   return (
-    <NumberFlowGroupContext.Provider value={value}>
+    <NumberFlowGroupContext.Provider value={() => value}>
       {props.children}
     </NumberFlowGroupContext.Provider>
   )
