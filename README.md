@@ -35,7 +35,7 @@ bun add solid-number-flow
 Use it:
 
 ```tsx
-import solid-number-flow from 'solid-number-flow'
+import NumberFlow from "solid-number-flow";
 
 export default function Page() {
   const [value, setValue] = createSignal(398.43);
@@ -45,7 +45,6 @@ export default function Page() {
       <button onClick={() => setValue(Math.random() * 1000)}>Random</button>
       <NumberFlow value={value()} />
     </>
-  )
+  );
 }
-
 ```
